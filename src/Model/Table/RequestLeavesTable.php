@@ -50,6 +50,7 @@ class RequestLeavesTable extends Table
             'foreignKey' => 'company_id',
             'joinType' => 'INNER'
         ]);
+		 $this->belongsTo('FinancialYears');
     }
 
     /**
@@ -64,29 +65,15 @@ class RequestLeavesTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
-            ->date('leave_from')
-            ->requirePresence('leave_from', 'create')
-            ->notEmpty('leave_from');
+       
 
-        $validator
-            ->date('leave_to')
-            ->requirePresence('leave_to', 'create')
-            ->notEmpty('leave_to');
-
-        $validator
-            ->integer('no_of_days')
-            ->requirePresence('no_of_days', 'create')
-            ->notEmpty('no_of_days');
-
+       
+       
         $validator
             ->requirePresence('reason', 'create')
             ->notEmpty('reason');
 
-        $validator
-            ->integer('request_date')
-            ->requirePresence('request_date', 'create')
-            ->notEmpty('request_date');
+       
 
         $validator
             ->requirePresence('leave_status', 'create')

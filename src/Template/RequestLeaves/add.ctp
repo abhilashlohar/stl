@@ -30,6 +30,7 @@
 						<label class="col-md-4 control-label">Employee Name</label>
 						<div class="col-md-8">
 							<?php echo $Employee->name; ?>
+							<?php echo $this->Form->input('employee_id',['type' => 'hidden','value'=> $Employee->id]); ?>
 						</div>
 					</div>
 				</div>
@@ -39,7 +40,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Leave Type</label>
 						<div class="col-md-8">
-							<?php echo $this->Form->input('sales_ledger_account', ['empty' => "--Select--",'label' => false,'options' => $leaveTypes,'class' => 'form-control input-sm select2me','required']); ?>
+							<?php echo $this->Form->input('leave_type_id', ['empty' => "--Select--",'label' => false,'options' => $leaveTypes,'class' => 'form-control input-sm select2me','required']); ?>
 						</div>
 					</div>
 				</div>
@@ -51,7 +52,7 @@
 						<div class="col-md-8">
 							<div class="radio-inline" >
 									<?php echo $this->Form->radio(
-											'over_time',
+											'half_day',
 											[
 												['value' => 'Yes', 'text' => 'Yes'],
 												['value' => 'No', 'text' => 'No']
@@ -68,11 +69,11 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Date Of Leave Required</label>
 						<div class="col-md-4">
-							<?php echo $this->Form->input('leave_from',['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','placeholder' => 'Leave From']); ?>
+							<?php echo $this->Form->input('leave_from',['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','placeholder' => 'Leave From','data-date-start-date' => date("d-m-Y",strtotime($today)),'data-date-end-date' => date("d-m-Y",strtotime($financial_year->date_to))]); ?>
 						</div>
 						
 						<div class="col-md-4">
-							<?php echo $this->Form->input('leave_to',['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','placeholder' => 'Leave To']); ?>
+							<?php echo $this->Form->input('leave_to',['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','placeholder' => 'Leave To','data-date-start-date' => date("d-m-Y",strtotime($today))]); ?>
 						</div>
 					</div>
 				</div>
@@ -83,7 +84,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Reason For Leave</label>
 						<div class="col-md-8">
-							<?php echo $this->Form->textarea('date_of_submission',['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Reason For Leave']); ?>
+							<?php echo $this->Form->textarea('reason',['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Reason For Leave']); ?>
 						</div>
 					</div>
 				</div>
@@ -95,6 +96,16 @@
 						<label class="col-md-4 control-label">Place Of Visit</label>
 						<div class="col-md-8">
 							<?php echo $this->Form->input('date_of_submission',['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Place Of Visit']); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br/><div class="row">
+				<div class="col-md-9">
+					<div class="form-group">
+						<label class="col-md-4 control-label">Remark</label>
+						<div class="col-md-8">
+							<?php echo $this->Form->input('remarks',['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Place Of Visit']); ?>
 						</div>
 					</div>
 				</div>
