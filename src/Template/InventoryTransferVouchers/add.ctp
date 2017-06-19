@@ -242,6 +242,7 @@ $(document).ready(function() {
 	
 	function sr_nos(tr_obj){ 
 		var serial_number_enable=tr_obj.find('td:nth-child(1) select option:selected').attr('serial_number_enable');
+		alert(serial_number_enable);
 		if(serial_number_enable==1){
 			var qty=tr_obj.find('td:nth-child(2) input').val();
 			var row_no=tr_obj.attr('row_no');
@@ -278,6 +279,7 @@ $(document).ready(function() {
 		var select_item_id=$(this).find('option:selected').val();
 		var url1="<?php echo $this->Url->build(['controller'=>'InventoryTransferVouchers','action'=>'ItemSerialNumber']); ?>";
 		url1=url1+'/'+select_item_id,
+		
 		$.ajax({
 			url: url1,
 		}).done(function(response) { 
@@ -338,7 +340,7 @@ $(document).ready(function() {
 				<?php 
 				$item_option=[];
 				foreach($display_items as $Item){ 
-					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)$Item->serial_number_enable];
+					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
 				}
 				echo $this->Form->input('q', ['empty'=>'Select','options' => $item_option,'label' => false,'style'=>' display: block; width:80%;','class' => 'form-control input-sm select_item_out item_id']); ?>
 			</td>
@@ -360,7 +362,7 @@ $(document).ready(function() {
 				<?php 
 				$item_option=[];
 				foreach($display_items as $Item){ 
-					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)$Item->serial_number_enable];
+					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
 				}
 				echo $this->Form->input('q', ['empty'=>'Select','options' => $item_option,'label' => false,'style'=>'width: 80px; display: block;','class' => 'form-control input-sm select_item_in item_id']); ?>
 			</td>

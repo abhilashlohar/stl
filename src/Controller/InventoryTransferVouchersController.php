@@ -84,8 +84,13 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers'])->toArray();
-			
+		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
+						function($q) use($st_company_id){
+											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
+				}
+		
+		]);
+		//pr($display_items); exit;
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 	
         if ($this->request->is('post')) {
@@ -526,7 +531,12 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers'])->toArray();
+		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
+						function($q) use($st_company_id){
+											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
+				}
+		
+		]);
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
@@ -592,7 +602,12 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers'])->toArray();
+		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
+						function($q) use($st_company_id){
+											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
+				}
+		
+		]);
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {

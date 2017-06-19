@@ -19,7 +19,7 @@
 			
 			<?php  echo $this->Html->link(' In/Out',array('controller'=>'InventoryTransferVouchers','action'=>'add'),array('escape'=>false,'class'=>'btn btn-default')); ?>
 			<?php echo $this->Html->link('<i class="fa fa-puzzle-piece"></i>In',array('controller'=>'InventoryTransferVouchers','action'=>'InventoryIn'),array('escape'=>false,'class'=>'btn btn-primary')); ?>
-			<?php echo $this->Html->link('Out','/InvoiceBookings/purchaseReport',array('escape'=>false,'class'=>'btn btn-default')); ?>
+			<?php echo $this->Html->link('Out','/InventoryTransferVouchers/inventoryOut',array('escape'=>false,'class'=>'btn btn-default')); ?>
 			
 		</div>
 	</div>
@@ -203,7 +203,7 @@ $(document).ready(function() {
 	
 	function sr_nos(tr_obj){  
 		var serial_number_enable=tr_obj.find('td:nth-child(1) select option:selected').attr('serial_number_enable');
-		alert(serial_number_enable);
+		//alert(serial_number_enable);
 		if(serial_number_enable==1){
 			var qty=tr_obj.find('td:nth-child(2) input').val();
 			var row_no=tr_obj.attr('row_no');
@@ -270,7 +270,7 @@ $(document).ready(function() {
 				<?php 
 				$item_option=[];
 				foreach($display_items as $Item){ 
-					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)$Item->serial_number_enable];
+					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
 				}
 				echo $this->Form->input('q', ['empty'=>'Select','options' => $item_option,'label' => false,'style'=>'width: 100%; display: block;','class' => 'form-control input-sm select_item_in item_id']); ?>
 			</td>
