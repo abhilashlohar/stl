@@ -60,8 +60,9 @@
 						<table id="main_table" width="50%"  class="table table-condensed">
 							<thead>
 								<tr>
-									<th>Sr./No</th>
+									<th>Sr.N.</th>
 									<th>Date /Time/Of Departure</th>
+									<th>Date /Time/Of Arrival</th>
 									<th >From</th>
 									<th >To</th>
 									<th >Mode Of Transport/Class</th>
@@ -85,18 +86,27 @@
 				</div>
 			</div><br/>
 			<div class="row">
-				<div class="col-md-12" style="border:1px solid">
+				<div class="col-md-12" style="border:1px">
 					<div class="form-group">
-						<label class="col-md-1 control-label">Sr./No.</label>
-						<label class="col-md-3 control-label">Date & Time of Departure</label>
-						<label class="col-md-1 control-label">From</label>
-						<label class="col-md-1 control-label">To</label>
-						<label class="col-md-1 control-label">No Of Days</label>
-						<label class="col-md-2 control-label">Rate/Day</label>
-						<label class="col-md-2 control-label">Amount Paid(Rs.)</label>
-						<label class="col-md-1 control-label">Bill (Yes/No)</label>
+						<table id="main_table1" width="50%"  class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Sr.N.</th>
+									<th>Date /Time/Of Departure</th>
+									<th>Date /Time/Of Arrival</th>
+									<th >From</th>
+									<th >To</th>
+									<th >No of days</th>
+									<th>Rate/Day</th>
+									<th>Bill(Yes/No)</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="maintbody1">
+							
+							</tbody>
+						</table>
 					</div>
-					
 				</div>
 			</div><br/>
 			<div class="row">
@@ -334,6 +344,17 @@ $(document).ready(function() {
 		rename_rows();
 		
 	}
+	
+	add_row1();
+	$('.add_row1').die().live("click",function() { 
+		add_row1();  
+	});
+	function add_row1(){  
+		var tr2=$("#sampletable1 tbody tr").clone();
+		$("#main_table1 tbody#maintbody1").append(tr2);
+		rename_rows1();
+		
+	}
 
 	$('.deleterow').live("click",function() {
 			var l=$(this).closest("table tbody").find("tr").length;
@@ -345,6 +366,16 @@ $(document).ready(function() {
 				}
 			} 
 		});
+	$('.deleterow1').live("click",function() {
+			var l=$(this).closest("table tbody").find("tr").length;
+			if (confirm("Are you sure to remove row ?") == true) {
+				if(l>1){
+					var del=$(this).closest("tr");
+					$(del).remove();
+					rename_rows1();
+				}
+			} 
+		});
 	
 
 	function rename_rows(){
@@ -352,18 +383,43 @@ $(document).ready(function() {
 		$("#main_table tbody#maintbody tr.main").each(function(){
 			
 			$(this).find("td:nth-child(1)").html(++j); --j;
-			$(this).find('td:nth-child(2) input').attr({name:"inventory_transfer_voucher_rows["+j+"][quantity]", id:"inventory_transfer_voucher_rows-"+j+"-quantity"}).rules("add", "required");
+			$(this).find('td:nth-child(2) input').datepicker().attr({name:"travel_expenses["+j+"][date_of_arrival]", id:"travel_expenses-"+j+"-date_of_arrival"}).rules("add", "required");
 		
-			$(this).find('td:nth-child(3) input').attr({name:"inventory_transfer_voucher_rows["+j+"][amount]", id:"inventory_transfer_voucher_rows-"+j+"-amount"}).rules("add", "required");
+			$(this).find('td:nth-child(3) input').datepicker().attr({name:"travel_expenses["+j+"][date_of_departure]", id:"travel_expenses-"+j+"-date_of_departure"}).rules("add", "required");
 			
-			$(this).find('td:nth-child(4) input').attr({name:"inventory_transfer_voucher_rows["+j+"][amount]", id:"inventory_transfer_voucher_rows-"+j+"-amount"}).rules("add", "required");
+			$(this).find('td:nth-child(4) input').attr({name:"travel_expenses["+j+"][travel_from]", id:"travel_expenses-"+j+"-travel_from"}).rules("add", "required");
 			
-			$(this).find('td:nth-child(5) input').attr({name:"inventory_transfer_voucher_rows["+j+"][amount]", id:"inventory_transfer_voucher_rows-"+j+"-amount"}).rules("add", "required");
+			$(this).find('td:nth-child(5) input').attr({name:"travel_expenses["+j+"][travel_to]", id:"travel_expenses-"+j+"-travel_to"}).rules("add", "required");
 			
-			$(this).find('td:nth-child(6) input').attr({name:"inventory_transfer_voucher_rows["+j+"][amount]", id:"inventory_transfer_voucher_rows-"+j+"-amount"}).rules("add", "required");
+			$(this).find('td:nth-child(6) input').attr({name:"travel_expenses["+j+"][mode_of_transport]", id:"travel_expenses-"+j+"-mode_of_transport"}).rules("add", "required");
+			$(this).find('td:nth-child(7) input').attr({name:"travel_expenses["+j+"][amount]", id:"travel_expenses-"+j+"-amount"}).rules("add", "required");
+			
+			$(this).find('td:nth-child(8) input[type=file]').attr({name:"travel_expenses["+j+"][bill]", id:"travel_expenses-"+j+"-bill"}).rules("add", "required");
 			j++; 
 		});
 	}	
+	
+	
+	function rename_rows1(){
+		var j=0;
+		$("#main_table1 tbody#maintbody1 tr.main").each(function(){
+			
+			$(this).find("td:nth-child(1)").html(++j); --j;
+			$(this).find('td:nth-child(2) input').datepicker().attr({name:"hotel_expenses["+j+"][date_of_arrival]", id:"hotel_expenses-"+j+"-date_of_arrival"}).rules("add", "required");
+		
+			$(this).find('td:nth-child(3) input').datepicker().attr({name:"hotel_expenses["+j+"][date_of_departure]", id:"hotel_expenses-"+j+"-date_of_departure"}).rules("add", "required");
+			
+			$(this).find('td:nth-child(4) input').attr({name:"hotel_expenses["+j+"][travel_from]", id:"hotel_expenses-"+j+"-travel_from"}).rules("add", "required");
+			
+			$(this).find('td:nth-child(5) input').attr({name:"hotel_expenses["+j+"][travel_to]", id:"hotel_expenses-"+j+"-travel_to"}).rules("add", "required");
+			
+			$(this).find('td:nth-child(6) input').attr({name:"hotel_expenses["+j+"][mode_of_transport]", id:"hotel_expenses-"+j+"-mode_of_transport"}).rules("add", "required");
+			$(this).find('td:nth-child(7) input').attr({name:"hotel_expenses["+j+"][amount]", id:"hotel_expenses-"+j+"-amount"}).rules("add", "required");
+			
+			$(this).find('td:nth-child(8) input[type=file]').attr({name:"hotel_expenses["+j+"][bill]", id:"hotel_expenses-"+j+"-bill"}).rules("add", "required");
+			j++; 
+		});
+	}
 
 
 });
@@ -375,24 +431,60 @@ $(document).ready(function() {
 		<tr class="main">
 			<td width="2%"></td>
 			<td width="10%">
-				<?php echo $this->Form->input('q', ['type' => 'text','label' => false,'class' => 'form-control input-sm qty_bx_in','placeholder' => 'Quantity']); ?>
+			<?php echo $this->Form->input('Departure', ['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','data-date-start-date' => '+0d','data-date-end-date' => '+60d','placeholder' => 'Departure Date']); ?>
+				
 			</td>
 			<td width="10%"> 
-				<?php echo $this->Form->input('q', ['type' => 'text','label' => false,'class' => 'form-control input-sm qty_bx_in','placeholder' => 'Quantity']); ?>
+				<?php echo $this->Form->input('Departure', ['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','data-date-start-date' => '+0d','data-date-end-date' => '+60d','placeholder' => 'Departure Date']); ?>
+			</td>
+			<td width="10%"> 
+				<?php echo $this->Form->input('q', ['type' => 'text','label' => false,'class' => 'form-control input-sm qty_bx_in','placeholder' => 'Travel From']); ?>
 			</td>
 			<td width="10%">
-				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Rate']); ?>
+				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Travel To']); ?>
 			</td>
 			<td width="10%">
-				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Rate']); ?>
+				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Mode']); ?>
 			</td>
 			<td width="10%">
-				<?php echo $this->Form->input('narration', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Narration']); ?>
+				<?php echo $this->Form->input('narration', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Amount']); ?>
 			</td>
 			<td width="10%">
-				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Rate']); ?>
+				<?php echo $this->Form->input('amount', ['type' => 'file','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Bill']); ?>
 			</td>
 			<td width="10%"><a class="btn btn-xs btn-default add_row" href="#" role='button'><i class="fa fa-plus"></i></a><a class="btn btn-xs btn-default deleterow" href="#" role='button'><i class="fa fa-times"></i></a></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<table id="sampletable1" style="display:none;">
+	<tbody>
+		<tr class="main">
+			<td width="2%"></td>
+			<td width="10%">
+			<?php echo $this->Form->input('Departure', ['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','data-date-start-date' => '+0d','data-date-end-date' => '+60d','placeholder' => 'Departure Date']); ?>
+				
+			</td>
+			<td width="10%"> 
+				<?php echo $this->Form->input('Departure', ['type' => 'text','label' => false,'class' => 'form-control input-sm date-picker','data-date-format' => 'dd-mm-yyyy','data-date-start-date' => '+0d','data-date-end-date' => '+60d','placeholder' => 'Departure Date']); ?>
+			</td>
+			<td width="10%"> 
+				<?php echo $this->Form->input('q', ['type' => 'text','label' => false,'class' => 'form-control input-sm qty_bx_in','placeholder' => 'Travel From']); ?>
+			</td>
+			<td width="10%">
+				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Travel To']); ?>
+			</td>
+			<td width="10%">
+				<?php echo $this->Form->input('amount', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Mode']); ?>
+			</td>
+			<td width="10%">
+				<?php echo $this->Form->input('narration', ['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Amount']); ?>
+			</td>
+			<td width="10%">
+				<?php echo $this->Form->input('amount', ['type' => 'file','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Bill']); ?>
+			</td>
+			<td width="10%"><a class="btn btn-xs btn-default add_row1" href="#" role='button'><i class="fa fa-plus"></i></a><a class="btn btn-xs btn-default deleterow1" href="#" role='button'><i class="fa fa-times"></i></a></td>
 		</tr>
 	</tbody>
 </table>
