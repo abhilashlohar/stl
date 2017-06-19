@@ -415,17 +415,20 @@ class SaleReturnsController extends AppController
 					$itemLedger->processed_on = date("Y-m-d");
 					//$this->SaleReturns->ItemLedgers->save($itemLedger);
 			} 
+			
+			if(!empty($sale_return_data1->item_serial_numbers)){
 			$sale_return_data1->item_serial_numbers=array_filter($sale_return_data1->item_serial_numbers);
-			foreach($sale_return_data1->item_serial_numbers as $item_serial_number1){
-				foreach($item_serial_number1 as $item_serial_number){
-				$item_serial_number_data=$this->SaleReturns->SaleReturnRows->ItemSerialNumbers->get($item_serial_number);
-				$ItemSerialNumbers = $this->SaleReturns->SaleReturnRows->ItemSerialNumbers->newEntity();
-					$ItemSerialNumbers->status='In';
-					$ItemSerialNumbers->sale_return_id=$id;
-					$ItemSerialNumbers->serial_no=$item_serial_number_data->serial_no;
-					$ItemSerialNumbers->item_id=$item_serial_number_data->item_id;
-					$this->SaleReturns->SaleReturnRows->ItemSerialNumbers->save($ItemSerialNumbers);
-				} 
+				foreach($sale_return_data1->item_serial_numbers as $item_serial_number1){
+					foreach($item_serial_number1 as $item_serial_number){
+					$item_serial_number_data=$this->SaleReturns->SaleReturnRows->ItemSerialNumbers->get($item_serial_number);
+					$ItemSerialNumbers = $this->SaleReturns->SaleReturnRows->ItemSerialNumbers->newEntity();
+						$ItemSerialNumbers->status='In';
+						$ItemSerialNumbers->sale_return_id=$id;
+						$ItemSerialNumbers->serial_no=$item_serial_number_data->serial_no;
+						$ItemSerialNumbers->item_id=$item_serial_number_data->item_id;
+						$this->SaleReturns->SaleReturnRows->ItemSerialNumbers->save($ItemSerialNumbers);
+					} 
+				}
 			}
 			
 			$this->Flash->success(__('The Inventory return has been saved.'));

@@ -57,7 +57,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
      $routes->connect('/', ['controller' => 'Logins', 'action' => 'index', 'home']);
 	 $routes->connect('/login', ['controller' => 'Logins', 'action' => 'index', 'home']);
-	 $routes->connect('/Dashboard', ['controller' => 'Homes', 'action' => 'index', 'home']);
+	 $routes->connect('/Dashboard', ['controller' => 'Logins', 'action' => 'dashbord', 'home']);
 	 $routes->connect('/logout', ['controller' => 'Logins', 'action' => 'logout', 'home']);
 	 $routes->connect('/Districts', ['controller' => 'Districts', 'action' => 'add', 'home']);
 	 $routes->connect('/company-groups', ['controller' => 'CompanyGroups', 'action' => 'add', 'home']);

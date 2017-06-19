@@ -268,5 +268,13 @@ class LoginsController extends AppController
 			}
 			return $this->redirect(['controller'=>'Logins','action' => 'Add']);
 	}
+	public function dashbord()
+    {
+       $this->viewBuilder()->layout('index_layout');
+	   $leaves = $this->Logins->RequestLeaves->find()->contain(['Employees', 'LeaveTypes'])->where(['leave_status'=>'In-Process']);
+	   //pr($Leaves->toArray()); exit;
+	   $this->set(compact('leaves'));
+		
+    }
 }
 

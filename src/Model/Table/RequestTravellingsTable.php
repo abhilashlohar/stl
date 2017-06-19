@@ -7,21 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * RequestLeaves Model
+ * RequestTravellings Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Employees
- * @property \Cake\ORM\Association\BelongsTo $LeaveTypes
  * @property \Cake\ORM\Association\BelongsTo $Companies
  *
- * @method \App\Model\Entity\RequestLeave get($primaryKey, $options = [])
- * @method \App\Model\Entity\RequestLeave newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RequestLeave[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RequestLeave|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RequestLeave patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RequestLeave[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RequestLeave findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\RequestTravelling get($primaryKey, $options = [])
+ * @method \App\Model\Entity\RequestTravelling newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RequestTravelling[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\RequestTravelling|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RequestTravelling patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RequestTravelling[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RequestTravelling findOrCreate($search, callable $callback = null)
  */
-class RequestLeavesTable extends Table
+class RequestTravellingsTable extends Table
 {
 
     /**
@@ -34,7 +33,7 @@ class RequestLeavesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('request_leaves');
+        $this->table('request_travellings');
         $this->displayField('id');
         $this->primaryKey('id');
 
@@ -42,16 +41,10 @@ class RequestLeavesTable extends Table
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('LeaveTypes', [
-            'foreignKey' => 'leave_type_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Companies', [
             'foreignKey' => 'company_id',
             'joinType' => 'INNER'
         ]);
-		 $this->belongsTo('FinancialYears');
-		 $this->belongsTo('ApproveLeaves');
     }
 
     /**
@@ -66,27 +59,42 @@ class RequestLeavesTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-       
+        $validator
+            ->requirePresence('destination', 'create')
+            ->notEmpty('destination');
 
-       
-       
         $validator
             ->requirePresence('reason', 'create')
             ->notEmpty('reason');
 
-       
+        $validator
+            ->date('request_from')
+            ->requirePresence('request_from', 'create')
+            ->notEmpty('request_from');
 
         $validator
-            ->requirePresence('leave_status', 'create')
-            ->notEmpty('leave_status');
+            ->date('request_to')
+            ->requirePresence('request_to', 'create')
+            ->notEmpty('request_to');
 
         $validator
-            ->requirePresence('remarks', 'create')
-            ->notEmpty('remarks');
+            ->date('request_date')
+            ->requirePresence('request_date', 'create')
+            ->notEmpty('request_date');
 
         $validator
-            ->requirePresence('half_day', 'create')
-            ->notEmpty('half_day');
+            ->requirePresence('status', 'create')
+            ->notEmpty('status');
+
+        $validator
+            ->decimal('total_ammount')
+            ->requirePresence('total_ammount', 'create')
+            ->notEmpty('total_ammount');
+
+        $validator
+            ->decimal('approved_ammount')
+            ->requirePresence('approved_ammount', 'create')
+            ->notEmpty('approved_ammount');
 
         return $validator;
     }
@@ -101,7 +109,6 @@ class RequestLeavesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['employee_id'], 'Employees'));
-        $rules->add($rules->existsIn(['leave_type_id'], 'LeaveTypes'));
         $rules->add($rules->existsIn(['company_id'], 'Companies'));
 
         return $rules;

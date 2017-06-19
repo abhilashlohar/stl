@@ -16,6 +16,7 @@ class LoginsTable extends Table
         ]);
 		$this->belongsTo('UserRights');
 		$this->belongsTo('UserLogs');
+		$this->belongsTo('RequestLeaves');
 		
     }
 	

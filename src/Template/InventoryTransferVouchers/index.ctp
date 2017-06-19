@@ -37,7 +37,7 @@
 							<th>Vocher No</th>
 							<th>Transaction Date</th>
 							
-							<th class="actions"><?= __('Actions') ?></th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -49,16 +49,7 @@
 							<td><?= h('#'.str_pad($inventory_transfer_vouch_data->voucher_no, 4, '0', STR_PAD_LEFT)) ?></td>
 							<td><?= h(date("d-m-Y",strtotime($inventory_transfer_vouch_data->transaction_date)))?></td>
 							
-							<td class="actions">
-							<?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'view', $inventory_transfer_vouch_data->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View ')); ?>
-							 <?php if($inventory_transfer_vouch_data->in_out=='in_out'){ ?>
-							 <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $inventory_transfer_vouch_data->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>
-							 <?php } elseif($inventory_transfer_vouch_data->in_out=='in'){ ?>
-							 <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit_in', $inventory_transfer_vouch_data->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>
-							 <?php } else{ ?>
-							 <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit_out', $inventory_transfer_vouch_data->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>
-							 <?php }  ?>
-							</td>
+						
 						</tr>
 						<?php endforeach; ?>
 					</tbody>
