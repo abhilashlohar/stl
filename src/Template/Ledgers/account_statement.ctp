@@ -125,7 +125,7 @@
 					<tr>
 						<th>Transaction Date</th>
 						<th>Source</th>
-						<th>Reference</th>
+						<!--<th>Reference</th>-->
 						<th style="text-align:right;">Dr</th>
 						<th style="text-align:right;">Cr</th>
 					</tr>
@@ -162,26 +162,24 @@
 				{
 				?>
 				<tr>
-						<td><?php echo date("d-m-Y",strtotime($ledger->transaction_date)); ?></td>
-						<td><?= h($ledger->voucher_source); ?></td>
-						<td>
-						
-						<?php if(!empty($url_path)){
-								echo $this->Html->link(str_pad($ledger->voucher_id,4,'0',STR_PAD_LEFT),$url_path,['target' => '_blank']);
-							}else{
-								echo str_pad($ledger->voucher_id,4,'0',STR_PAD_LEFT);
-							}
-						
-						?>
-						</td>
-						<td align="right"><?= $this->Number->format($ledger->debit,[ 'places' => 2]); 
-							$total_debit+=$ledger->debit; ?></td>
-						<td align="right"><?= $this->Number->format($ledger->credit,[ 'places' => 2]); 
-							$total_credit+=$ledger->credit; ?></td>
+					<td><?php echo date("d-m-Y",strtotime($ledger->transaction_date)); ?></td>
+					<td><?= h($ledger->voucher_source); ?></td>
+					<!--<td>
+					<?php if(!empty($url_path)){
+							echo $this->Html->link(str_pad($ledger->voucher_id,4,'0',STR_PAD_LEFT),$url_path,['target' => '_blank']);
+						}else{
+							echo str_pad($ledger->voucher_id,4,'0',STR_PAD_LEFT);
+						}
+					?>
+					</td>-->
+					<td align="right"><?= $this->Number->format($ledger->debit,[ 'places' => 2]); 
+						$total_debit+=$ledger->debit; ?></td>
+					<td align="right"><?= $this->Number->format($ledger->credit,[ 'places' => 2]); 
+						$total_credit+=$ledger->credit; ?></td>
 				</tr>
 				<?php } endforeach; ?>
 				<tr>
-					<td colspan="3" align="right">Total</td>
+					<td colspan="2" align="right">Total</td>
 					<td align="right" ><?= number_format(@$opening_balance_total['debit'],2,'.',',') ;?> Dr</td>
 					<td align="right" ><?= number_format(@$opening_balance_total['credit'],2,'.',',')?> Cr</td>
 					
