@@ -51,6 +51,7 @@ class RequestLeavesTable extends Table
             'joinType' => 'INNER'
         ]);
 		 $this->belongsTo('FinancialYears');
+		 $this->belongsTo('ApproveLeaves');
     }
 
     /**

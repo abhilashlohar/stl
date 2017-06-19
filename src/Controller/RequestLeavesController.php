@@ -23,7 +23,7 @@ class RequestLeavesController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
       
-		$requestLeaves = $this->RequestLeaves->find()->contain(['Employees', 'LeaveTypes']);
+		$requestLeaves = $this->RequestLeaves->find()->contain(['Employees', 'LeaveTypes'])->where(['employee_id'=>$s_employee_id]);
         //$requestLeaves = $this->RequestLeaves->find();
 		//pr($requestLeaves->toArray()); exit;
         $this->set(compact('requestLeaves'));
@@ -126,6 +126,13 @@ class RequestLeavesController extends AppController
 			}else{
 				$datediff = abs($requestLeave->leave_from - $requestLeave->leave_to);
 			}
+			
+			if($datediff==6){
+				$datediff=7;
+			}elseif($datediff==12){
+				$datediff=14;
+			}
+			
 			$requestLeave->leave_from=date("Y-m-d",strtotime($requestLeave->leave_from));
 			$requestLeave->leave_to=date("Y-m-d",strtotime($requestLeave->leave_to));
 			$requestLeave->request_date=date("Y-m-d");
@@ -176,14 +183,64 @@ class RequestLeavesController extends AppController
         ]);
 		
 		$employeedata = $this->RequestLeaves->Employees->get($s_employee_id);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+            $requestLeave = $this->RequestLeaves->patchEntity($RequestLeavesData, $this->request->data);
+			//pr($requestLeave->no_of_days); exit;
+
+				
+            if ($this->RequestLeaves->save($requestLeave)) {
+				
+				$ApproveLeaves = $this->RequestLeaves->ApproveLeaves->newEntity();
+				$ApproveLeaves->leave_from=date("Y-m-d",strtotime($requestLeave->leave_from));
+				$ApproveLeaves->leave_to=date("Y-m-d",strtotime($requestLeave->leave_to));
+				$ApproveLeaves->approve_date=date("Y-m-d");
+				$ApproveLeaves->no_of_days=$requestLeave->no_of_days;
+				$ApproveLeaves->employee_id=$requestLeave->employee_id;
+				$ApproveLeaves->leave_type_id=$requestLeave->leave_type_id;
+				$this->RequestLeaves->ApproveLeaves->save($ApproveLeaves);
+				
+				$query_1 = $this->RequestLeaves->query();
+				$query_1->update()
+						->set(['leave_status' => 'Approve'])
+						->where(['id' => $id])
+						->execute();
+				
+				
+				
+                $this->Flash->success(__('The request leave has been Approved'));
+
+                return $this->redirect(['controller'=>'Logins','action' => 'dashbord']);
+            } else { //pr($requestLeave); exit;
+                $this->Flash->error(__('The request leave could not be saved. Please, try again.'));
+            }
+        }
+		$this->set(compact('requestLeaves', 'RequestLeavesData','Employee', 'leaveTypes', 'companies','today','financial_year','employeedata'));
+        $this->set('_serialize', ['requestLeave']);
+		
+	}
+	public function cancleLeaves($id=null){
+		$this->viewBuilder()->layout('');
+		$query_1 = $this->RequestLeaves->query();
+				$query_1->update()
+						->set(['leave_status' => 'Cancle'])
+						->where(['id' => $id])
+						->execute();
+		 return $this->redirect(['controller'=>'Logins','action' => 'dashbord']);
+	}
+	
+	public function showDetails($id=null,$employee_id=null){
+		$this->viewBuilder()->layout('ajax_layout');
+		//$s_employee_id=$this->viewVars['s_employee_id'];
+		$session = $this->request->session();
+		$st_company_id = $session->read('st_company_id');
 		$st_year_id = $session->read('st_year_id');
 		$financial_year = $this->RequestLeaves->FinancialYears->find()->where(['id'=>$st_year_id])->first();
 		$SessionCheckDate = $this->FinancialYears->get($st_year_id);
 		$fromdate1 = date("Y-m-d",strtotime($SessionCheckDate->date_from));   
 		$todate1 = date("Y-m-d",strtotime($SessionCheckDate->date_to)); 
 		$today = date("Y-m-d");
-		//pr($financial_year->date_from); exit;
-		$query = $this->RequestLeaves->find();
+
+		$query = $this->RequestLeaves->ApproveLeaves->find();
 		$CasualLeave = $query->newExpr()
 			->addCase(
 				$query->newExpr()->add(['leave_type_id' => 1]),
@@ -201,14 +258,10 @@ class RequestLeavesController extends AppController
 			'CasualLeave' => $query->func()->sum($CasualLeave),
 			'SickLeave' => $query->func()->sum($SickLeave)
 		])
-		->where(['employee_id'=>$s_employee_id])
+		->where(['employee_id'=>$employee_id])
 		->where(['leave_from >='=>$financial_year->date_from,'leave_to <='=>$financial_year->date_to])
 		->autoFields(true);
         $requestLeaves = $this->paginate($query);
-		//pr($itemLedgers->toArray()); exit;
-		
-		//$RequestLeave = $this->RequestLeaves->find()->where(['employee_id'=>$s_employee_id]);
-		//pr($itemLedgers->toArray()); exit;
 		$this->set(compact('requestLeaves', 'RequestLeavesData','Employee', 'leaveTypes', 'companies','today','financial_year','employeedata'));
         $this->set('_serialize', ['requestLeave']);
 		

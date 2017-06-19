@@ -38,7 +38,11 @@
 							<?php } else { ?>
 							<td><span class="label label-sm label-warning"><?= h($requestLeave->leave_status) ?></span></td>
 							<?php } ?>
-							<td><?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['controller'=>'RequestLeaves','action' => 'Edit', $requestLeave->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?></td>
+							<td>
+							<?php if($requestLeave->leave_status=='In-Process'){ ?>
+							<?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['controller'=>'RequestLeaves','action' => 'Edit', $requestLeave->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>
+							<?php } ?>
+							</td>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>

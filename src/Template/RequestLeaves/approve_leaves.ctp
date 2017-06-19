@@ -65,76 +65,49 @@
 			</div><br/>
 			
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-5">
 					<div class="form-group">
-						<label class="col-md-4 control-label">Reason For Leave</label>
-						<div class="col-md-8">
+						<label class="col-md-6 control-label">Reason For Leave</label>
+						<div class="col-md-6">
 							<?php echo $RequestLeavesData->reason; ?>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="col-md-6 control-label">Total days Of Leave</label>
+						<div class="col-md-6">
+							<?php echo $RequestLeavesData->no_of_days; ?>
 						</div>
 					</div>
 				</div>
 			</div><br/>
 			
+			
 			<br/><div class="row">
-				<div class="col-md-9">
+				<div class="col-md-10">
 					<div class="form-group">
-						<label class="col-md-4 control-label">Remark</label>
+						<label class="col-md-3 control-label">Remark</label>
 						<div class="col-md-8">
 							<?php echo $RequestLeavesData->remarks; ?>
 						</div>
 					</div>
 				</div>
 			</div><br/>
+			
+			
 			<div class="row">
-				<div class="col-md-9">
-						<table class="table table-bordered table-striped table-hover">
-				<thead>
-					<tr>
-						<th colspan="2">Total Eligible</th>
-						<th colspan="2">Leave taken till date</th>
-						<th colspan="2">Current leave day</th>
-						<th colspan="2">Balance</th>
-					</tr>
-					<tr>
-						<th>SL</th>
-						<th>CL</th>
-						<th>SL</th>
-						<th>CL</th>
-						<th>SL</th>
-						<th>CL</th>
-						<th>SL</th>
-						<th>CL</th>
-					</tr>
-				</thead>
-				<tbody>
-				<?php foreach ($requestLeaves as $RequestLeave): ?>
-					<tr>
-						<td>15</td>
-						<td>15</td>
-						<td><?php echo $RequestLeave->SickLeave; ?></td>
-						<td><?php echo $RequestLeave->CasualLeave; ?></td>
-						<?php if($RequestLeavesData->leave_type_id==1){ ?>
-						<td><?php echo '0'; ?></td>
-						<td><?php echo $RequestLeave->no_of_days; ?></td>
-						<?php } elseif($RequestLeavesData->leave_type_id==2){?>
-						<td><?php echo $RequestLeave->no_of_days; ?></td>
-						<td><?php echo '0'; ?></td>
-						<?php }?>
-						<?php if($RequestLeavesData->leave_type_id==1){ ?>
-						<td><?php echo 15-$RequestLeave->SickLeave; ?></td>
-						<td><?php echo 15-$RequestLeave->CasualLeave-$RequestLeave->no_of_days; ?></td>
-						<?php } elseif($RequestLeavesData->leave_type_id==2){?>
-						<td><?php echo $RequestLeave->no_of_days; ?></td>
-						<td><?php echo '0'; ?></td>
-						<?php }?>
-					</tr>
-				<?php endforeach; ?>
-				
-				</tbody>
-			</table>
+				<div class="col-md-10">
+					<div class="form-group">
+						<label class="col-md-3 control-label">Message</label>
+						<div class="col-md-8">
+							<?php echo $this->Form->textarea('message',['type' => 'text','label' => false,'class' => 'form-control input-sm ','placeholder' => 'Message']); ?>
+						</div>
+					</div>
 				</div>
 			</div><br/>
-				
+
+			
 			</div>
 			<br/>
 		</div>
@@ -142,7 +115,7 @@
 			<div class="row">
 				<div class="col-md-offset-3 col-md-9">
 					
-					<button type="submit" class="btn btn-primary" >ADD</button>
+					<button type="submit" class="btn btn-primary">Approve</button>
 					</div>
 			</div>
 		</div>
