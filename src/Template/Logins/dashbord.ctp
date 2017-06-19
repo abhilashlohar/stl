@@ -102,7 +102,7 @@
 							<td><?= h($requestLeave->employee->name) ?></td>
 							<td><?php echo $requestLeave->no_of_days; ?></td>
 							
-							<td><?php echo $this->Html->link('Approve',['controller'=>'RequestLeaves','action' => 'Edit', $requestLeave->id],array('escape'=>false,'class'=>'btn btn-sm default','data-original-title'=>'Edit')); 
+							<td><?php echo $this->Html->link('Approve',['controller'=>'RequestLeaves','action' => 'approveLeaves', $requestLeave->id],array('escape'=>false,'class'=>'btn btn-sm default','data-original-title'=>'Edit')); 
 							echo $this->Html->link('<i class="fa fa-minus-circle"></i> ',['action' => '#'],array('escape'=>false,'class'=>'btn btn-xs red','data-original-title'=>'Close','role'=>'button','invoice_id'=>$requestLeave->id));
 						
 							?>

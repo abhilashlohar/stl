@@ -165,4 +165,52 @@ class RequestLeavesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	public function approveLeaves($id=null){
+		$this->viewBuilder()->layout('index_layout');
+		$s_employee_id=$this->viewVars['s_employee_id'];
+		$session = $this->request->session();
+		$st_company_id = $session->read('st_company_id');
+		//$RequestLeavesData = $this->RequestLeaves->get($id);
+		$RequestLeavesData = $this->RequestLeaves->get($id, [
+            'contain' => ['Employees', 'LeaveTypes']
+        ]);
+		
+		$employeedata = $this->RequestLeaves->Employees->get($s_employee_id);
+		$st_year_id = $session->read('st_year_id');
+		$financial_year = $this->RequestLeaves->FinancialYears->find()->where(['id'=>$st_year_id])->first();
+		$SessionCheckDate = $this->FinancialYears->get($st_year_id);
+		$fromdate1 = date("Y-m-d",strtotime($SessionCheckDate->date_from));   
+		$todate1 = date("Y-m-d",strtotime($SessionCheckDate->date_to)); 
+		$today = date("Y-m-d");
+		//pr($financial_year->date_from); exit;
+		$query = $this->RequestLeaves->find();
+		$CasualLeave = $query->newExpr()
+			->addCase(
+				$query->newExpr()->add(['leave_type_id' => 1]),
+				$query->newExpr()->add(['no_of_days']),
+				'integer'
+			);
+		$SickLeave = $query->newExpr()
+			->addCase(
+				$query->newExpr()->add(['leave_type_id' => 2]),
+				$query->newExpr()->add(['no_of_days']),
+				'integer'
+			);
+
+		$query->select([
+			'CasualLeave' => $query->func()->sum($CasualLeave),
+			'SickLeave' => $query->func()->sum($SickLeave)
+		])
+		->where(['employee_id'=>$s_employee_id])
+		->where(['leave_from >='=>$financial_year->date_from,'leave_to <='=>$financial_year->date_to])
+		->autoFields(true);
+        $requestLeaves = $this->paginate($query);
+		//pr($itemLedgers->toArray()); exit;
+		
+		//$RequestLeave = $this->RequestLeaves->find()->where(['employee_id'=>$s_employee_id]);
+		//pr($itemLedgers->toArray()); exit;
+		$this->set(compact('requestLeaves', 'RequestLeavesData','Employee', 'leaveTypes', 'companies','today','financial_year','employeedata'));
+        $this->set('_serialize', ['requestLeave']);
+		
+	}
 }
