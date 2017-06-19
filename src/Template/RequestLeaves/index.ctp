@@ -15,8 +15,8 @@
 						<tr>
 							<th>Sr. No.</th>
 							<th>Leave Type</th>
-							<th>Leave From</th>
-							<th>Leave To</th>
+							<th>No Of Days</th>
+							<th>Remark</th>
 							<th>Leave Status</th>
 							
 							<th class="actions"><?= __('Actions') ?></th>
@@ -29,9 +29,16 @@
 						<tr>
 							<td><?= h(++$page_no) ?></td>
 							<td><?= h($requestLeave->leave_type->leave_name) ?></td>
-							<td><?= h(date("d-m-Y",strtotime($requestLeave->leave_from))); ?></td>
-							<td><?= h(date("d-m-Y",strtotime($requestLeave->leave_to))); ?></td>
-							<td><?= h($requestLeave->leave_status) ?></td>
+							<td><?php echo $requestLeave->no_of_days; ?></td>
+							<td><?= h($requestLeave->remarks) ?></td>
+							<?php if($requestLeave->leave_status=='Approve'){ ?>
+							<td><span class="label label-sm label-success"><?= h($requestLeave->leave_status) ?></span></td>
+							<?php } elseif($requestLeave->leave_status=='Cancle') { ?>
+							<td><span class="label label-sm label-danger"><?= h($requestLeave->leave_status) ?></span></td>
+							<?php } else { ?>
+							<td><span class="label label-sm label-warning"><?= h($requestLeave->leave_status) ?></span></td>
+							<?php } ?>
+							<td><?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['controller'=>'RequestLeaves','action' => 'Edit', $requestLeave->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?></td>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>

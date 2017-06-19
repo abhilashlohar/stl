@@ -104,11 +104,33 @@ class RequestLeavesController extends AppController
      */
     public function edit($id = null)
     {
+		$this->viewBuilder()->layout('index_layout');
+		$s_employee_id=$this->viewVars['s_employee_id'];
+		$session = $this->request->session();
+		$st_company_id = $session->read('st_company_id');
+		$Employee = $this->RequestLeaves->Employees->get($s_employee_id);
+		$st_year_id = $session->read('st_year_id');
+		$financial_year = $this->RequestLeaves->FinancialYears->find()->where(['id'=>$st_year_id])->first();
+		$SessionCheckDate = $this->FinancialYears->get($st_year_id);
+		$fromdate1 = date("Y-m-d",strtotime($SessionCheckDate->date_from));   
+		$todate1 = date("Y-m-d",strtotime($SessionCheckDate->date_to)); 
+		$today = date("Y-m-d");
+		
         $requestLeave = $this->RequestLeaves->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $requestLeave = $this->RequestLeaves->patchEntity($requestLeave, $this->request->data);
+			if($requestLeave->leave_from == $requestLeave->leave_to){
+				$datediff=1;
+			}else{
+				$datediff = abs($requestLeave->leave_from - $requestLeave->leave_to);
+			}
+			$requestLeave->leave_from=date("Y-m-d",strtotime($requestLeave->leave_from));
+			$requestLeave->leave_to=date("Y-m-d",strtotime($requestLeave->leave_to));
+			$requestLeave->request_date=date("Y-m-d");
+			$requestLeave->no_of_days=$datediff;
+			$requestLeave->leave_status='In-Process';
             if ($this->RequestLeaves->save($requestLeave)) {
                 $this->Flash->success(__('The request leave has been saved.'));
 
@@ -117,10 +139,10 @@ class RequestLeavesController extends AppController
                 $this->Flash->error(__('The request leave could not be saved. Please, try again.'));
             }
         }
-        $employees = $this->RequestLeaves->Employees->find('list', ['limit' => 200]);
+       // $employees = $this->RequestLeaves->Employees->find('list', ['limit' => 200]);
         $leaveTypes = $this->RequestLeaves->LeaveTypes->find('list', ['limit' => 200]);
         $companies = $this->RequestLeaves->Companies->find('list', ['limit' => 200]);
-        $this->set(compact('requestLeave', 'employees', 'leaveTypes', 'companies'));
+        $this->set(compact('requestLeave', 'Employee', 'leaveTypes', 'companies','today','financial_year'));
         $this->set('_serialize', ['requestLeave']);
     }
 
