@@ -198,6 +198,7 @@
 							$total_debit+=$ledger->debit; ?></td>
 						<td align="right"><?= $this->Number->format($ledger->credit,[ 'places' => 2]); 
 							$total_credit+=$ledger->credit; ?></td>
+
 				</tr>
 				<?php } endforeach; ?>
 				<tr>
