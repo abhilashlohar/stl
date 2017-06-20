@@ -524,8 +524,36 @@ class LedgersController extends AppController
 				->where(function($exp) use($transaction_from_date,$transaction_to_date){
 					return $exp->between('transaction_date', $transaction_from_date, $transaction_to_date, 'date');
 				})->order(['transaction_date' => 'DESC']);
-		}   pr($Ledgers->toArray()); exit;
-
+				//pr($Ledgers->toArray()); exit;
+		}
+			$url_link=[];
+			foreach($Ledgers as $ledger){
+				if($ledger->voucher_source=="Journal Voucher"){
+					$url_link[$ledger->id]=$this->Ledgers->JournalVouchers->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Payment Voucher"){
+					$url_link[$ledger->id]=$this->Ledgers->Payments->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Petty Cash Payment Voucher"){
+					$url_link[$ledger->id]="/petty-cash-vouchers/view/".$ledger->voucher_id;
+				}else if($ledger->voucher_source=="Contra Voucher"){
+					$url_link[$ledger->id]=$this->Ledgers->ContraVouchers->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Receipt Voucher"){
+				$url_link[$ledger->id]=$this->Ledgers->Receipts->get($ledger->voucher_id); 
+				}else if($ledger->voucher_source=="Invoice"){
+					$url_link[$ledger->id]=$this->Ledgers->Invoices->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Invoice Booking"){
+					$url_link[$ledger->id]=$this->Ledgers->InvoiceBookings->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Non Print Payment Voucher"){
+					$url_link[$ledger->id]=$this->Ledgers->Nppayments->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Debit Note"){
+					$url_link[$ledger->id]=$this->Ledgers->DebitNotes->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Credit Note"){
+					$url_link[$ledger->id]=$this->Ledgers->CreditNotes->get($ledger->voucher_id);
+				}else if($ledger->voucher_source=="Purchase Return"){
+					$url_link[$ledger->id]=$this->Ledgers->PurchaseReturns->get($ledger->voucher_id);
+				}
+			}	
+			//pr($url_link->toArray()); 
+			//exit;
 			$ledger=$this->Ledgers->LedgerAccounts->find('list',
 				['keyField' => function ($row) {
 					return $row['id'];
@@ -539,7 +567,7 @@ class LedgersController extends AppController
 					
 				}])->where(['company_id'=>$st_company_id]);
 		//pr($ledger->toArray()); exit;
-			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data'));		
+			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data','url_link'));		
 		
 	}
 	

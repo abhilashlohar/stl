@@ -80,7 +80,8 @@ class SaleReturnsTable extends Table
 		$this->belongsTo('InventoryVouchers');
 
         $this->hasMany('SaleReturnRows', [
-            'foreignKey' => 'sale_return_id'
+            'foreignKey' => 'sale_return_id',
+			'saveStrategy'=>'replace'
         ]);
     }
 

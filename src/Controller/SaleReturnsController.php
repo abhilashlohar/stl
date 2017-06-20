@@ -69,7 +69,7 @@ class SaleReturnsController extends AppController
     public function view($id = null)
     {
         $saleReturn = $this->SaleReturns->get($id, [
-            'contain' => ['Customers', 'SaleTaxes', 'Companies', 'SalesOrders', 'Employees', 'Transporters', 'StLedgerAccounts', 'SaleReturnRows']
+            'contain' => ['SaleReturnRows']
         ]);
 
         $this->set('saleReturn', $saleReturn);
@@ -451,7 +451,7 @@ class SaleReturnsController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$this->viewBuilder()->layout('index_layout');
-        $saleReturn = $this->SaleReturns->newEntity();
+        //$saleReturn = $this->SaleReturns->newEntity();
 		$invoice_id=@(int)$this->request->query('invoice');
 		
 				$st_year_id = $session->read('st_year_id');

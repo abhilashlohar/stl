@@ -45,6 +45,16 @@ class LedgersTable extends Table
 		$this->belongsTo('ReferenceBalances');
 		$this->belongsTo('FinancialYears');
 		$this->belongsTo('VouchersReferences');
+		$this->belongsTo('Invoices');
+		$this->belongsTo('JournalVouchers');
+		$this->belongsTo('PurchaseReturns');
+		$this->belongsTo('CreditNotes');
+		$this->belongsTo('DebitNotes');
+		$this->belongsTo('Nppayments');
+		$this->belongsTo('InvoiceBookings');
+		$this->belongsTo('Receipts');
+		$this->belongsTo('ContraVouchers');
+		$this->belongsTo('Payments');
     }
 
     /**
