@@ -512,7 +512,7 @@ class LedgersController extends AppController
 
 		if($ledger_account_id)
 		{
-					$Ledger_Account_data = $this->Ledgers->LedgerAccounts->get($ledger_account_id, [
+			$Ledger_Account_data = $this->Ledgers->LedgerAccounts->get($ledger_account_id, [
             'contain' => ['AccountSecondSubgroups'=>['AccountFirstSubgroups'=>['AccountGroups'=>['AccountCategories']]]]
         ]);
 		
@@ -524,7 +524,7 @@ class LedgersController extends AppController
 				->where(function($exp) use($transaction_from_date,$transaction_to_date){
 					return $exp->between('transaction_date', $transaction_from_date, $transaction_to_date, 'date');
 				})->order(['transaction_date' => 'DESC']);
-		}   //pr($Ledgers->toArray()); exit;
+		}   pr($Ledgers->toArray()); exit;
 
 			$ledger=$this->Ledgers->LedgerAccounts->find('list',
 				['keyField' => function ($row) {
@@ -538,7 +538,7 @@ class LedgersController extends AppController
 					}
 					
 				}])->where(['company_id'=>$st_company_id]);
-		
+		//pr($ledger->toArray()); exit;
 			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data'));		
 		
 	}
@@ -588,6 +588,7 @@ class LedgersController extends AppController
 			$where[]=$data->ledger_account_id;
 		}
 		$BankCashes_selected='yes';
+		//pr(sizeof($where)); exit;
 		if(sizeof($where)>0){
 			$banks = $this->Ledgers->LedgerAccounts->find('list',
 				['keyField' => function ($row) {
@@ -653,6 +654,7 @@ class LedgersController extends AppController
 			$where[]=$data->ledger_account_id;
 		}
 		$BankCashes_selected='yes';
+		
 		if(sizeof($where)>0){
 			$banks = $this->Ledgers->LedgerAccounts->find('list',
 				['keyField' => function ($row) {
