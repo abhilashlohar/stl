@@ -626,9 +626,6 @@ class InventoryTransferVouchersController extends AppController
 				if ($this->InventoryTransferVouchers->save($inventoryTransferVoucher)) {
 				
 					foreach($inventoryTransferVoucher->inventory_transfer_voucher_rows as $inventory_transfer_voucher_row){
-					
-					
-					
 				$Itemledgers = $this->InventoryTransferVouchers->ItemLedgers->find()->where(['item_id'=>$inventory_transfer_voucher_row->item_id,'in_out'=>'In']);
 				
 				$ledger_data=$Itemledgers->count();
