@@ -648,7 +648,7 @@ select
 						<li><?php $today =date('d-m-Y');
 						echo $this->Html->link('<i class="fa fa-puzzle-piece"></i> Sales Report',array('controller'=>'Invoices','action'=>'salesReport','From'=>$today,'To'=>$today),array('escape'=>false)); ?></li>
 						<?php if(in_array(36,$allowed_pages)){?>
-						<li><?php echo $this->Html->link('<i class="fa fa-truck"></i> Item Report','/Item-Ledgers/Stock-Report',array('escape'=>false)); ?></li>	
+						<li><?php echo $this->Html->link('<i class="fa fa-truck"></i> Stock Report','/Item-Ledgers/Stock-Report',array('escape'=>false)); ?></li>	
 						<?php } ?>
 						<?php if(in_array(37,$allowed_pages)){?>
 						<li><?php echo $this->Html->link('<i class="fa fa-truck"></i> Balance Sheet','/ledger-Accounts/Balance-Sheet',array('escape'=>false)); ?></li>
@@ -680,7 +680,7 @@ select
 					</a>
 					<ul class="sub-menu">
 						<?php 
-						echo '<li>'.$this->Html->link('<i class="icon-home"></i> Create','/Invoices/index?sales_return=true',array('escape'=>false)).'</li>';
+						echo '<li>'.$this->Html->link('<i class="icon-home"></i> Create','/Invoices/SalesReturnIndex?sales_return=true',array('escape'=>false)).'</li>';
 						 ?>
 						<?php 
 						echo '<li>'.$this->Html->link('<i class="icon-home"></i> View','/SaleReturns/',array('escape'=>false)).'</li>';

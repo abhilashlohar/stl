@@ -108,6 +108,32 @@ class InvoicesController extends AppController
 		$this->set(compact('url'));
     }
 	
+	public function SalesReturnIndex($status=null){
+		$this->viewBuilder()->layout('index_layout');
+		$url=$this->request->here();
+		$url=parse_url($url,PHP_URL_QUERY);
+		$session = $this->request->session();
+		$st_company_id = $session->read('st_company_id');
+		$sales_return=$this->request->query('sales_return');
+		$status=$this->request->query('status');
+		@$invoice_no=$this->request->query('invoice_no');	
+		$where=[];
+		$status = 0 ;
+			if(!empty($invoice_no)){
+			$invoice_no=$this->request->query('invoice_no');	
+			if(!empty($invoice_no)){
+				$where['Invoices.in2 LIKE']=$invoice_no;
+			}
+				//pr($invoice_no);exit;
+				$invoices = $this->Invoices->find()->contain(['Customers','SalesOrders','InvoiceRows'=>['Items']])->where($where)->where(['Invoices.company_id'=>$st_company_id]);
+				$status=1;
+		}
+		//pr($status);exit;
+		$this->set(compact('invoices','status','sales_return','InvoiceRows'));
+        $this->set('_serialize', ['invoices']);
+		$this->set(compact('url'));
+	}
+	
 	public function DueInvoices($customer_id=null)
     {
 		$this->viewBuilder()->layout('index_layout');

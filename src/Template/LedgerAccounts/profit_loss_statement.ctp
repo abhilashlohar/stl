@@ -46,12 +46,13 @@
 									</a> 
 									</td>
 									<?php if($Expense_group['debit'] > $Expense_group['credit']){?>
-										<td style=" text-align: right; "><?= h($Expense_group['debit']-$Expense_group['credit']); echo "Dr" ;
+										<td style=" text-align: right; "><?= h(
+										$this->Number->format($Expense_group['debit']-$Expense_group['credit'],['places'=>2])); echo "Dr" ;
 										$Total_exp_Dr+=$Expense_group['debit']-$Expense_group['credit']; 
 										?></td>
 									<?php } else { ?>
 											
-										<td style=" text-align: right; "><?= h(abs($Expense_group['debit']-$Expense_group['credit'])); echo "Cr" ;
+										<td style=" text-align: right; "><?= h($this->Number->format(abs($Expense_group['debit']-$Expense_group['credit']),['places'=>2])); echo "Cr" ;
 										$Total_exp_Cr+=$Expense_group['debit']-$Expense_group['credit']; 
 										?></td>
 									<?php } ?>
@@ -62,12 +63,12 @@
 									<th>Total Expense</th>
 									<?php  if($Total_exp_Dr>$Total_exp_Cr){ 
 										$Total_Liablities=abs($Total_exp_Dr)-abs($Total_exp_Cr);?>
-										<th style=" text-align: right; "><?= h (abs($Total_Liablities)); ?>Dr</th>
+										<th style=" text-align: right; "><?= h ($this->Number->format(abs($Total_Liablities),['places'=>2])); ?>Dr</th>
 									<?php } else if($Total_exp_Dr<$Total_exp_Cr) { 
 										$Total_Liablities=abs($Total_exp_Dr)-abs($Total_exp_Cr); ?>
-										<th style=" text-align: right; "><?= h(abs($Total_Liablities)); ?>Cr</th>
+										<th style=" text-align: right; "><?= h($this->Number->format(abs($Total_Liablities),['places'=>2])); ?>Cr</th>
 									<?php } else { ?>
-									<th style=" text-align: right; "><?php echo "0" ?></th>
+									<th style=" text-align: right; "><?php echo $this->Number->format("0",['places'=>2]); ?></th>
 									<?php } ?>
 								</tr>
 							</tbody>
@@ -91,12 +92,12 @@
 															 </a>  
 									</td>
 									<?php if($Income_group['debit'] > $Income_group['credit']){?>
-										<td style=" text-align: right; "><?= h($Income_group['debit']-$Income_group['credit']); echo "Dr" ;
+										<td style=" text-align: right; "><?= h($this->Number->format($Income_group['debit']-$Income_group['credit'],['places'=>2])); echo "Dr" ;
 										$Total_Dr+=$Income_group['debit']-$Income_group['credit']; 
 										?></td>
 									<?php } else { ?>
 											
-										<td style=" text-align: right; "><?= h(abs($Income_group['debit']-$Income_group['credit'])); echo "Cr" ;
+										<td style=" text-align: right; "><?= h($this->Number->format(abs($Income_group['debit']-$Income_group['credit']),['places'=>2])); echo "Cr" ;
 										$Total_Cr+=$Income_group['debit']-$Income_group['credit']; 
 										?></td>
 									<?php } ?>
@@ -108,11 +109,11 @@
 								<tr>
 									<th>Total Income</th>
 									<?php  if($Total_Dr>$Total_Cr){ $Total_Assets=abs($Total_Dr)-abs($Total_Cr);  ?>
-										<th style=" text-align: right; "><?= h(abs($Total_Assets)); ?>Dr</th>
+										<th style=" text-align: right; "><?= h($this->Number->format(abs($Total_Assets),['places'=>2])); ?>Dr</th>
 									<?php } else if($Total_Dr<$Total_Cr) { $Total_Assets=abs($Total_Dr)-abs($Total_Cr); ?>
-										<th style=" text-align: right; "><?= h(abs($Total_Assets)); ?>Cr</th>
+										<th style=" text-align: right; "><?= h($this->Number->format(abs($Total_Assets),['places'=>2])); ?>Cr</th>
 									<?php } else { ?>
-									<th style=" text-align: right; "><?php echo "0" ?></th>
+									<th style=" text-align: right; "><?php echo $this->Number->format('0',['places'=>2]) ?></th>
 									<?php } ?>
 								</tr>
 							</tbody>

@@ -129,7 +129,7 @@ class LoginsController extends AppController
 		$Employee=$this->Logins->Employees->get($employee_id);
 		$status = $Employee->status;
 		$Emp_name = $Employee->name;		
-		$mobile_no = $Employee->mobile;	
+		$mobile_no = 9001855886;	
 		$randomString = rand(1000, 9999);
 		if($status == '0'){
 				

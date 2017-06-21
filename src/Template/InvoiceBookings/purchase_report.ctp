@@ -1,5 +1,3 @@
-
-
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
@@ -7,37 +5,30 @@
 			<span class="caption-subject font-blue-steel uppercase">Purchase Report</span>
 		</div>
 		<div class="actions">
-			
 			<?php $today =date('d-m-Y'); echo $this->Html->link('<i class="fa fa-puzzle-piece"></i> Sales Report',array('controller'=>'Invoices','action'=>'salesReport','From'=>$today,'To'=>$today),array('escape'=>false,'class'=>'btn btn-default')); ?>
 			<?php echo $this->Html->link('Sales Return Report','/SaleReturns/salesReturnReport',array('escape'=>false,'class'=>'btn btn-default')); ?>
 			<?php echo $this->Html->link('Purchase Report','/InvoiceBookings/purchaseReport',array('escape'=>false,'class'=>'btn btn-primary')); ?>
 			<?php echo $this->Html->link('Purchase Return Report','/PurchaseReturns/purchaseReturnReport',array('escape'=>false,'class'=>'btn btn-default')); ?>
 		</div>
 		
-	</div>
 	<div class="portlet-body form">
 	<form method="GET" >
-				<table class="table table-condensed" style="width:90%;">
-				<tbody>
-					<tr>
-					<td>
-						<div class="row">
-							<div class="col-md-3">
-								<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @$From; ?>"  data-date-format="dd-mm-yyyy" >
-							</div>
-							<div class="col-md-3">
-								<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Transaction To" value="<?php echo @$To; ?>"  data-date-format="dd-mm-yyyy" >
-							</div>
-							<div class="col-md-3">
-								<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button>
-							</div>
-						</div>
+		<table class="table table-condensed" width="50%">
+			<tbody>
+				<tr>
+					<td width="2%">
+						<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @$From; ?>"  data-date-format="dd-mm-yyyy" >
 					</td>
-					
-					</tr>
-				</tbody>
-			</table>
-			</form>
+					<td width="2%">
+						<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Transaction To" value="<?php echo @$To; ?>"  data-date-format="dd-mm-yyyy" >
+					</td>
+					<td width="10%">
+						<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 		<!-- BEGIN FORM-->
 		<div class="row ">
 		
@@ -51,12 +42,12 @@
 						<th>Invoice No</th>
 						<th>Date</th>
 						<th>Supplier</th>
-						<th>Purchase @ 5.50 %</th>
-						<th>VAT @5.50 %</th>
-						<th>Purchase @ 14.50 %</th>
-						<th>VAT @14.50 %</th>
-						<th>Purchase @ 5.00 %</th>
-						<th>VAT @5.00 %</th>
+						<th style="text-align:right;">Purchase @ 5.50 %</th>
+						<th style="text-align:right;">VAT @5.50 %</th>
+						<th style="text-align:right;">Purchase @ 14.50 %</th>
+						<th style="text-align:right;">VAT @14.50 %</th>
+						<th style="text-align:right;">Purchase @ 5.00 %</th>
+						<th style="text-align:right;">VAT @5.00 %</th>
 					</tr>
 				</thead>
 				<tbody><?php $totalvat5=0; $totalvat14=0; $totalvat2=0; $total_purchase5=0; $total_purchase14=0; $total_purchase2=0; ?>
@@ -145,34 +136,34 @@
 								?>
 							<?php }?>
 							<?php  ?>
-							<td><?php if($purchase2 > 0){
-								echo $purchase2-$vat2;
+							<td align="right"><?php if($purchase2 > 0){
+								echo number_format($purchase2-$vat2,2,'.',',');
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($vat2 > 0){
-								echo $vat2;
+							<td align="right"><?php if($vat2 > 0){
+								echo number_format($vat2,2,'.',',');
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($purchase14 > 0){
-								echo $purchase14-$vat14;
+							<td align="right"><?php if($purchase14 > 0){
+								echo number_format($purchase14-$vat14,2,'.',',');
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($vat14 > 0){
-								echo $vat14;
+							<td align="right"><?php if($vat14 > 0){
+								echo number_format($vat14,2,'.',',');
 							}else{
 								echo "-";
 							} ?>
 							</td>
-							<td><?php if($purchase5 > 0){
-								echo $purchase5-$vat5;
+							<td align="right"><?php if($purchase5 > 0){
+								echo number_format($purchase5-$vat5,2,'.',',');
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($vat5 > 0){
-								echo $vat5;
+							<td align="right"><?php if($vat5 > 0){
+								echo number_format($vat5,2,'.',',');
 							}else{
 								echo "-";
 							} ?>
@@ -191,21 +182,17 @@
 				<?php endforeach; ?>
 				<tr>
 					<td colspan="4" align="right">Total</td>
-					<td><?php echo $total_purchase2-$totalvat2; ?></td>
-					<td><?php echo $totalvat2; ?></td>
-					<td><?php echo $total_purchase14-$totalvat14; ?></td>
-					<td><?php echo $totalvat14; ?></td>
-					<td><?php echo $total_purchase5-$totalvat5; ?></td>
-					<td><?php echo $totalvat5; ?></td>
+					<td align="right"><?php echo number_format($total_purchase2-$totalvat2,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($totalvat2,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($total_purchase14-$totalvat14,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($totalvat14,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($total_purchase5-$totalvat5,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($totalvat5,2,'.',','); ?></td>
 				</tr>
 				</tbody>
 			</table>
 			</div>
-		
 		</div>
-		
-		
-		<!-- END FORM-->
-
-
+	</div>
 </div>
+</div></div>

@@ -51,8 +51,8 @@
 			   <td>
 				<?php echo $ledger_name; ?>
 			    </td>
-				<td style="text-align:right;"><?= h($OpeningBalanceView->credit) ?></td>
-				<td style="text-align:right;"><?= h($OpeningBalanceView->debit) ?></td>
+				<td style="text-align:right;"><?= h($this->Number->format($OpeningBalanceView->credit,['places'=>2])) ?></td>
+				<td style="text-align:right;"><?= h($this->Number->format($OpeningBalanceView->debit,['places'=>2])) ?></td>
 				
 				<td class="actions">
 				<?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $OpeningBalanceView->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit'));?>

@@ -42,8 +42,8 @@
 					<th width="100">Date</th>
 					<th>Item</th>
 					<th>Quantity</th>
-					<th>Rate</th>
-					<th>Amout</th>
+					<th style="text-align:right;">Rate</th>
+					<th style="text-align:right;">Amout</th>
 					<th width="50" style="font-size: 9px !important;">Serial Number Enable</th>
 					<th>Action</th>
 				</tr>
@@ -54,9 +54,9 @@
 					<td><?= h(++$page_no) ?></td>
 					<td><?= date('d-m-Y',strtotime($ItemLedger->processed_on)) ?></td>
 					<td><?= h($ItemLedger->item->name) ?></td>
-					<td><?= h((int)$ItemLedger->quantity) ?></td>
-					<td><?= h($ItemLedger->rate) ?></td>
-					<td><?= h($ItemLedger->quantity*$ItemLedger->rate) ?></td>
+					<td align="center"><?= h((int)$ItemLedger->quantity) ?></td>
+					<td align="right"><?= h($this->Number->format($ItemLedger->rate,['places'=>2])) ?></td>
+					<td align="right"><?= h($this->Number->format($ItemLedger->quantity*$ItemLedger->rate,['places'=>2])) ?></td>
 					<td><?= $ItemLedger->item->item_companies[0]->serial_number_enable ? 'Yes' : 'No'?></td>
 					<td>
 					<?= $this->Html->link('<i class="fa fa-pencil-square-o"></i> ',

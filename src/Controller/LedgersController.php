@@ -352,11 +352,7 @@ class LedgersController extends AppController
 					$this->Ledgers->ReferenceBalances->save($ReferenceBalance);
 				}  
 			}
-		
-		
-				
-	
-        }
+		}
 		//pr($ledger); exit;
         $ledgerAccounts = $this->Ledgers->LedgerAccounts->find('list', ['limit' => 200]);
         $this->set(compact('ledger', 'ledgerAccounts','allow','ledger_details'));
@@ -515,10 +511,13 @@ class LedgersController extends AppController
 			$Ledger_Account_data = $this->Ledgers->LedgerAccounts->get($ledger_account_id, [
             'contain' => ['AccountSecondSubgroups'=>['AccountFirstSubgroups'=>['AccountGroups'=>['AccountCategories']]]]
         ]);
-		
-			$transaction_from_date= date('Y-m-d', strtotime($this->request->query['From']));
-			$transaction_to_date= date('Y-m-d', strtotime($this->request->query['To']));
-
+			
+			$from = $this->request->query['From'];
+			$To = $this->request->query['To'];
+			
+			$transaction_from_date= date('Y-m-d', strtotime($from));
+			$transaction_to_date= date('Y-m-d', strtotime($To));
+			$this->set(compact('from','To','transaction_from_date','transaction_to_date'));
 			$Ledgers = $this->Ledgers->find()
 				->where(['ledger_account_id'=>$ledger_account_id,'company_id'=>$st_company_id])
 				->where(function($exp) use($transaction_from_date,$transaction_to_date){
@@ -567,7 +566,7 @@ class LedgersController extends AppController
 					
 				}])->where(['company_id'=>$st_company_id]);
 		//pr($ledger->toArray()); exit;
-			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data','url_link'));		
+			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data','url_link','transaction_from_date','transaction_to_date'));		
 		
 	}
 	

@@ -98,9 +98,9 @@
 							<td><?= h($party_name) ?></td>
 							<td><?= h($voucher_no) ?></td>
 							<td><?= h($itemLedger->source_model) ?></td>
-							<td><?php if($in_out_type=='In'){ echo $this->Number->format($itemLedger->quantity); } else { echo '-'; } ?></td>
+							<td><?php if($in_out_type=='In'){ echo $this->Number->format($itemLedger->quantity,['places'=>2]); } else { echo '-'; } ?></td>
 							<td><?php echo $status; ?></td>
-							<td><?php echo $rate; ?></td>
+							<td><?php echo $this->Number->format($rate,['places'=>2]); ?></td>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>

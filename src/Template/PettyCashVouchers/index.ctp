@@ -16,7 +16,7 @@
                             <th>Sr. No.</th>
                             <th>Transaction Date</th>
                             <th>Vocher No</th>
-                            <th>Amount</th>
+                            <th style="text-align:right;">Amount</th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
@@ -33,7 +33,7 @@
 									$total_cr=$total_cr+$petty_cash_voucher_row->amount;
 								}
 							}  $total= $total_dr-$total_cr?>
-                            <td><?= h($total) ?></td>
+                            <td align="right"><?= h($this->Number->format($total,[ 'places' => 2])) ?></td>
                             <td class="actions">
                             <?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'view', $pettycashvoucher->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View ')); ?>
                              <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $pettycashvoucher->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>
