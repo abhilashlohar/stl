@@ -53,7 +53,7 @@
 									<?php echo $this->Form->input('ledger_account_id', ['empty'=>'--Select--','options' => $ledger,'empty' => "--Select Ledger Account--",'label' => false,'class' => 'form-control input-sm select2me','required','value'=>@$ledger_account_id]); ?>
 							</div>
 							<div class="col-md-4">
-								<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @date('1-4-Y', strtotime($transaction_from_date));  ?>" required data-date-format="dd-mm-yyyy" >
+								<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @date('d-m-Y', strtotime($transaction_from_date));  ?>" required data-date-format="dd-mm-yyyy"   >
 							</div>
 							<div class="col-md-4">
 								<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Transaction To"  value="<?php echo @date('d-m-Y', strtotime($transaction_to_date)); ?>" required  data-date-format="dd-mm-yyyy" >
@@ -102,14 +102,14 @@
 						if(!empty(@$opening_balance_ar)){
 						
 							if(@$opening_balance_ar['debit'] > @$opening_balance_ar['credit']){
-								echo @$opening_balance_ar['debit'].'Dr';		
+								echo $this->Number->format(@$opening_balance_ar['debit'].'Dr',[ 'places' => 2]);		
 							}
 							else{
-								echo @$opening_balance_ar['credit'].'Cr';
+								echo $this->Number->format(@$opening_balance_ar['credit'].'Cr',[ 'places' => 2]);
 							}						
 						
 						}
-						else { echo '0'; }
+						else { echo $this->Number->format('0',[ 'places' => 2]); }
 
 						
 				?>  
@@ -215,7 +215,7 @@
 				<div class="col-md-8"></div>	
 				<div class="col-md-4 caption-subject " align="left" style="background-color:#E3F2EE; font-size: 16px;"><b>Closing Balance:- </b>
 				<?php $closing_balance=@$closing_balance_ar['debit']-@$closing_balance_ar['credit'];
-						echo abs($closing_balance);
+						echo $this->Number->format(abs($closing_balance),['places'=>2]);
 						if($closing_balance>0){
 							echo 'Dr';
 						}else if($closing_balance <0){

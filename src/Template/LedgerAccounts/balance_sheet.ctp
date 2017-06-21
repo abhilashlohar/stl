@@ -48,7 +48,7 @@
 												</td>
 												<td style="text-align:right;">
 													<span>
-														<?= h(abs($Total_Liablities)) ?>
+														<?= h($this->Number->format(abs($Total_Liablities),['places'=>2])) ?>
 														<?php if($Total_Liablities>=0)
 														     { $Total_lib_Dr += $Total_Liablities; echo 'Dr'; }
 															 else{ $Total_lib_Cr += $Total_Liablities; echo 'Cr';} ?>
@@ -81,7 +81,7 @@
 															 </a>  
 														</td>
 														<td style="text-align:right;">
-															<?= h(abs($Total_Assets)) ?>
+															<?= h($this->Number->format(abs($Total_Assets),['places'=>2])) ?>
 															<?php if($Total_Assets>=0)
 															{ $Total_Dr += $Total_Assets;  echo 'Dr'; }
 														    else{ $Total_Cr += $Total_Assets; echo 'Cr'; } ?>
@@ -101,12 +101,13 @@
 										<th style='padding-left: 20px;'>Total Liablities </th>
 										<?php  if($Total_lib_Dr>$Total_lib_Cr){ 
 											$Total_Liablities=abs($Total_lib_Dr)-abs($Total_lib_Cr);?>
-											<th style=" text-align: right; "><?= h (abs($Total_Liablities)); ?> Dr</th>
+											<th style=" text-align: right; "><?= h (
+											$this->Number->format(abs($Total_Liablities),['places'=>2])); ?> Dr</th>
 										<?php } else if ($Total_lib_Dr<$Total_lib_Cr) { 
 											$Total_Liablities=abs($Total_lib_Dr)-abs($Total_lib_Cr); ?>
-											<th style=" text-align: right;padding-right: 20px;"><?= h(abs($Total_Liablities)); ?>Cr</th>
+											<th style=" text-align: right;padding-right: 20px;"><?= h($this->Number->format(abs($Total_Liablities),['places'=>2])); ?>Cr</th>
 										<?php } else { ?>
-										<th style=" text-align: right;padding-right: 20px;"><?php echo '0'; ?></th>
+										<th style=" text-align: right;padding-right: 20px;"><?php echo $this->Number->format('0',['places'=>2]); ?></th>
 										<?php } ?>
 									</tr>	
 
@@ -117,11 +118,11 @@
 								  <tr>
 									<th style='padding-left: 20px;'>Total Assets</th>
 									<?php  if($Total_Dr>$Total_Cr){ $Total_Assets=abs($Total_Dr)-abs($Total_Cr);  ?>
-										<th style=" text-align: right;padding-right: 20px;" width="200px"><?= h($Total_Assets ); ?> Dr</th>
+										<th style=" text-align: right;padding-right: 20px;" width="200px"><?= h( $this->Number->format($Total_Assets,['places'=>2]) ); ?> Dr</th>
 									<?php } else if($Total_Dr<$Total_Cr){ $Total_Assets=abs($Total_Dr)-abs($Total_Cr); ?>
-										<th style=" text-align: right;padding-right: 20px;" width="200px"><?= h(abs($Total_Assets)); ?>Cr</th>
+										<th style=" text-align: right;padding-right: 20px;" width="200px"><?= h($this->Number->format(abs($Total_Assets),['places'=>2])); ?>Cr</th>
 									<?php } else { ?>
-									<th style=" text-align: right;padding-right: 20px;"><?php echo "0" ?></th>
+									<th style=" text-align: right;padding-right: 20px;"><?php echo $this->Number->format('0',['places'=>2])?></th>
 									<?php } ?>
 								   </tr>
 								</table>

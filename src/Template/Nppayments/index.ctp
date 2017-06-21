@@ -31,11 +31,11 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th width="5%">Sr. No.</th>
-                            <th width="15%">Transaction Date</th>
-                            <th width="20%">Vocher No</th>
-                            <th width="20%" >Amount</th>
-                            <th width="10%" class="actions"><?= __('Actions') ?></th>
+                            <th >Sr. No.</th>
+                            <th >Transaction Date</th>
+                            <th>Vocher No</th>
+                            <th style="text-align:right;" >Amount</th>
+                            <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +47,7 @@
                             <td><?= h(++$page_no) ?></td>
                             <td><?= h(date("d-m-Y",strtotime($nppayment->transaction_date)))?></td>
                             <td><?= h('#'.str_pad($nppayment->voucher_no, 4, '0', STR_PAD_LEFT)) ?></td>
-                            <td><?= h($nppayment->nppayment_rows[0]->total_dr-$nppayment->nppayment_rows[0]->total_cr) ?></td>
+                            <td align="right"><?= h($this->Number->format($nppayment->nppayment_rows[0]->total_dr-$nppayment->nppayment_rows[0]->total_cr,[ 'places' => 2])) ?></td>
                             <td class="actions">
                             <?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'view', $nppayment->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View ')); ?>
                              <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $nppayment->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>

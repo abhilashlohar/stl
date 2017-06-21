@@ -43,8 +43,13 @@ margin-bottom: 0;
 	</table>
 	<table width="100%">
 		<tr>
-			<td width="50%" valign="top" align="left">
+			<td width="70%" valign="top" align="left">
 				<table>
+					<tr>
+						<td>Customer/Supplier</td>
+						<td width="20" align="center">:</td>
+						<td><?= h($creditNotes->customer_suppiler->name.'('.$creditNotes->customer_suppiler->alias.')') ?></td>
+					</tr>
 					<tr>
 						<td>Voucher No</td>
 						<td width="20" align="center">:</td>
@@ -59,16 +64,6 @@ margin-bottom: 0;
 						<td width="20" align="center">:</td>
 						<td><?= h(date("d-m-Y",strtotime($creditNotes->transaction_date))) ?></td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table width="100%">
-	<tr>
-	<td width="50%" valign="top" align="right"></td>
-	<td width="50%" valign="top" align="right">
-			
-			<table>
 					<tr>
 						<td>Created On</td>
 						<td width="20" align="center">:</td>
@@ -76,8 +71,9 @@ margin-bottom: 0;
 					</tr>
 				</table>
 			</td>
-	</tr>
+		</tr>
 	</table>
+	
 	<br/>
 	<table width="100%" class="table" style="font-size:12px">
 		<tr>
@@ -101,7 +97,7 @@ margin-bottom: 0;
 		<tr>
 			<td width="30%"><?=h($ReferenceDetail->reference_type) ?></td>
 			<td><?=h($ReferenceDetail->reference_no) ?></td>
-			<td>Rs.<?=h($ReferenceDetail->credit) ?></td>
+			<td>Rs.<?=h($this->Number->format($ReferenceDetail->credit,[ 'places' => 2])) ?></td>
 		</tr>
 		<?php  } ?>
 	</table>

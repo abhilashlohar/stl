@@ -100,7 +100,7 @@ margin-bottom: 0;
 					{ 
 					
 					$dr=$dr+$journal_voucher_row->amount;
-					echo $journal_voucher_row->amount ;
+					echo $this->Number->format($journal_voucher_row->amount,[ 'places' => 2]) ;
 					}else{ echo "-";} ?>
 				</td>
 				<td>
@@ -108,7 +108,7 @@ margin-bottom: 0;
 					{
 					
 					$cr=$cr+$journal_voucher_row->amount;
-					echo $journal_voucher_row->amount;
+					echo $this->Number->format($journal_voucher_row->amount,[ 'places' => 2]);
 					}else{ echo "-";} ?>
 				</td>
 			</tr>
@@ -123,9 +123,9 @@ margin-bottom: 0;
 					<td style="width :180px !important;"> <?= h($refbal->reference_type). '-' .h($refbal->reference_no) ?></td>
 					
 					<td > <?php if($refbal->credit != '0' ){ ?> 
-					<?= h($refbal->credit) ?> Cr 
+					<?= h($this->Number->format($refbal->credit,[ 'places' => 2])) ?> Cr 
 					<?php } elseif( $refbal->debit != '0'){?>
-					<?= h($refbal->debit) ?> Dr
+					<?= h($this->Number->format($refbal->debit,[ 'places' => 2])) ?> Dr
 					<?php } ?></td>
 					</tr>
 			<?php endforeach; ?>

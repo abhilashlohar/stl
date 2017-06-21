@@ -40,6 +40,11 @@ margin-bottom: 0;
         <tr>
             <td width="50%" valign="top" align="left">
                 <table>
+					<tr>
+                        <td>Bank/Cash Account</td>
+                        <td width="20" align="center">:</td>
+                        <td><?= h($pettycashvoucher->BankCash->name) ?></td>
+                    </tr>
                     <tr>
                         <td>Voucher No</td>
                         <td width="20" align="center">:</td>
@@ -54,24 +59,16 @@ margin-bottom: 0;
                         <td width="20" align="center">:</td>
                         <td><?= h(date("d-m-Y",strtotime($pettycashvoucher->transaction_date))) ?></td>
                     </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-	<table width="100%">
-		<tr>
-			<td width="50%" valign="top" align="right"></td>
-			<td width="50%" valign="top" align="right">
-				<table>
 					<tr>
 						<td>Created On </td>
 						<td width="20" align="center">:</td>
 						<td><?= h(date("d-m-Y",strtotime($pettycashvoucher->created_on))) ?></td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
+                </table>
+            </td>
+        </tr>
+    </table>
+	
     <br/>
     <table width="100%" class="table" style="font-size:12px">
         <tr>

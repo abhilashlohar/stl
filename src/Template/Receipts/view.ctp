@@ -45,6 +45,11 @@ margin-bottom: 0;
 		<tr>
 			<td width="50%" valign="top" align="left">
 				<table>
+					 <tr>
+                        <td>Bank/Cash Account</td>
+                        <td width="20" align="center">:</td>
+                        <td><?= h($receipt->BankCash->name) ?></td>
+                    </tr>
 					<tr>
 						<td>Voucher No</td>
 						<td width="20" align="center">:</td>
@@ -59,16 +64,6 @@ margin-bottom: 0;
 						<td width="20" align="center">:</td>
 						<td><?= h(date("d-m-Y",strtotime($receipt->transaction_date))) ?></td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table width="100%">
-	<tr>
-	<td width="50%" valign="top" align="right"></td>
-	<td width="50%" valign="top" align="right">
-			
-			<table>
 					<tr>
 						<td>Created On</td>
 						<td width="20" align="center">:</td>
@@ -76,8 +71,9 @@ margin-bottom: 0;
 					</tr>
 				</table>
 			</td>
-	</tr>
+		</tr>
 	</table>
+	
 	<br/>
 	<table width="100%" class="table" style="font-size:12px">
 		<tr>
@@ -100,9 +96,9 @@ margin-bottom: 0;
 					<td style="width :180px !important;"> <?= h($refbal->reference_type). '-' .h($refbal->reference_no) ?></td>
 					
 					<td > <?php if($refbal->credit != '0' ){ ?> 
-					<?= h($refbal->credit) ?> Cr 
+					<?= h($this->Number->format($refbal->credit,[ 'places' => 2])) ?> Cr 
 					<?php } elseif( $refbal->debit != '0'){?>
-					<?= h($refbal->debit) ?> Dr
+					<?= h($this->Number->format($refbal->debit,[ 'places' => 2])) ?> Dr
 					<?php } ?></td>
 					</tr>
 			<?php endforeach; ?>

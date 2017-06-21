@@ -16,7 +16,7 @@
                             <th>Sr. No.</th>
                             <th>Transaction Date</th>
                             <th>Vocher No</th>
-                            <th>Amount</th>
+                            <th style="text-align:right;">Amount</th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
@@ -28,7 +28,7 @@
                             <td><?= h(++$page_no) ?></td>
                             <td><?= h(date("d-m-Y",strtotime($contravoucher->transaction_date)))?></td>
                             <td><?= h('#'.str_pad($contravoucher->voucher_no, 4, '0', STR_PAD_LEFT)) ?></td>
-                            <td><?= h($contravoucher->contra_voucher_rows[0]->total_dr - $contravoucher->contra_voucher_rows[0]->total_cr) ?></td>
+                            <td align="right"><?= h($this->Number->format($contravoucher->contra_voucher_rows[0]->total_dr - $contravoucher->contra_voucher_rows[0]->total_cr,[ 'places' => 2])) ?></td>
                             <td class="actions">
                             <?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'view', $contravoucher->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View ')); ?>
                              <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $contravoucher->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>

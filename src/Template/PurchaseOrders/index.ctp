@@ -115,7 +115,7 @@
 								</div>
 							</td>
 							<td><?php echo date("d-m-Y",strtotime( $purchaseOrder->date_created)) 	 ?></td>
-							<td align="right"><?= $this->Number->format($purchaseOrder->total) ?></td>
+							<td align="right"><?= $this->Number->format($purchaseOrder->total,['places'=>2]) ?></td>
 						
 							<td class="actions">
 							<?php if(in_array(31,$allowed_pages)){ ?>

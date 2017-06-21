@@ -39,7 +39,7 @@
 							<th>Sr. No.</th>
 							<th>Transaction Date</th>
 							<th>Vocher No</th>
-							<th>Amount</th>
+							<th style="text-align:right;">Amount</th>
 							<th class="actions"><?= __('Actions') ?></th>
 						</tr>
 					</thead>
@@ -51,7 +51,7 @@
 							<td><?= h(++$page_no) ?></td>
 							<td><?= h(date("d-m-Y",strtotime($receipt->transaction_date)))?></td>
 							<td><?= h('#'.str_pad($receipt->voucher_no, 4, '0', STR_PAD_LEFT)) ?></td>
-							<td><?= h($receipt->receipt_rows[0]->total_cr-$receipt->receipt_rows[0]->total_dr) ?></td>
+							<td align="right"><?= h($this->Number->format($receipt->receipt_rows[0]->total_cr-$receipt->receipt_rows[0]->total_dr,[ 'places' => 2])) ?></td>
 							<td class="actions">
 							<?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'view', $receipt->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View ')); ?>
 							 <?php echo $this->Html->link('<i class="fa fa-pencil-square-o"></i>',['action' => 'edit', $receipt->id],array('escape'=>false,'class'=>'btn btn-xs blue tooltips','data-original-title'=>'Edit')); ?>

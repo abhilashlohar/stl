@@ -78,7 +78,7 @@
 							<th width="12%">Customer</th>
 							<th width="8%">Items</th>
 							<th width="8%">Created Date</th>
-							<th width="10%">Total</th>
+							<th style="text-align:right;" width="10%">Total</th>
 							<th width="10%">Actions</th>
 						</tr>
 					</thead>
@@ -112,7 +112,7 @@
 								</div>
 							</td>
 							<td><?php echo date("d-m-Y",strtotime($invoice->date_created)); ?></td>
-							<td><?= h($invoice->total_after_pnf) ?></td>
+							<td align="right"><?= h($this->Number->format($invoice->total_after_pnf,['places'=>2])) ?></td>
 							<td class="actions">
 								<?php if(in_array(23,$allowed_pages) and $sales_return!="true"){ ?>
 								<?php echo $this->Html->link('<i class="fa fa-search"></i>',['action' => 'confirm', $invoice->id],array('escape'=>false,'target'=>'_blank','class'=>'btn btn-xs yellow tooltips','data-original-title'=>'View as PDF')); ?>

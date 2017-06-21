@@ -683,6 +683,7 @@ class PurchaseReturnsController extends AppController
 		$st_company_id = $session->read('st_company_id');
 		$From=$this->request->query('From');
 		$To=$this->request->query('To');
+		$this->set(compact('From','To'));
 		$where=[];
 		
 		if(!empty($From)){

@@ -58,8 +58,8 @@
 						<th width="10%">Ledger Account</th>
 						<th width="10%">Source</th>
 						<th width="10%">Reference</th>
-						<th width="5%">Debit</th>
-						<th width="5%">Credit</th>
+						<th style="text-align:right;" width="5%">Debit</th>
+						<th  style="text-align:right;" width="5%">Credit</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -103,8 +103,8 @@
 						
 						?>
 						</td>
-						<td ><?= $this->Number->format($ledger->debit) ?></td>
-						<td ><?= $this->Number->format($ledger->credit) ?></td>
+						<td align="right"><?= $this->Number->format($ledger->debit,['places'=>2]) ?></td>
+						<td align="right"><?= $this->Number->format($ledger->credit,['places'=>2]) ?></td>
 				</tr>
 				<?php endforeach; ?>
 				</tbody>

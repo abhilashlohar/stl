@@ -34,14 +34,13 @@ class ItemLedgersController extends AppController
 				$itemLedger->party_type='Item';
 				$itemLedger->party_info='-'; 
 			}else{
-				$result=$this->GetVoucherParty($itemLedger->source_model,$itemLedger->source_id);
+				$result=$this->GetVoucherParty($itemLedger->source_model,$itemLedger->source_id); 
 				$itemLedger->voucher_info=$result['voucher_info'];
 				$itemLedger->party_type=$result['party_type'];
 				$itemLedger->party_info=$result['party_info']; 	
 			}
 			$itemLedgers[]=$itemLedger;
-		} 
-		
+		}
         $this->set(compact('itemLedgers'));
         $this->set('_serialize', ['itemLedgers']);
     }
@@ -50,7 +49,6 @@ class ItemLedgersController extends AppController
     {
 		
 		//return $source_model.$source_id;
-		//pr($source_model); exit;
 		if($source_model=="Grns"){
 			$Grn=$this->ItemLedgers->Grns->get($source_id);
 			
@@ -89,10 +87,11 @@ class ItemLedgersController extends AppController
 			$Customer=$this->ItemLedgers->Customers->get($SaleReturn->customer_id);
 			return ['voucher_info'=>$SaleReturn,'party_type'=>'Sale','party_info'=>$Customer];
 		}
-		/* if($source_model=="Items"){ 
-			$Item=$this->ItemLedgers->Items->get($source_id);
-			return ['voucher_info'=>$Item,'party_type'=>'Item','party_info'=>'-'];
-		} */
+		 if($source_model=="Inventory Transfer Voucher"){ 
+			$InventoryTransferVouchers=$this->ItemLedgers->InventoryTransferVouchers->get($source_id);//pr($source_id);exit;
+			//$Item=$this->ItemLedgers->Items->get($source_id);
+			return ['voucher_info'=>$InventoryTransferVouchers,'party_type'=>'-','party_info'=>'-'];
+		} 
        return $source_model.$source_id;
     }
 
@@ -192,7 +191,7 @@ class ItemLedgersController extends AppController
         $session = $this->request->session();
         $st_company_id = $session->read('st_company_id');
 		$item_name=$this->request->query('item_name');
-       
+		$item_stocks =[];$items_names =[];
 		$query = $this->ItemLedgers->find();
 		$totalInCase = $query->newExpr()
 			->addCase(
@@ -214,12 +213,21 @@ class ItemLedgersController extends AppController
 		->where(['company_id'=>$st_company_id])
 		->group('item_id')
 		->autoFields(true)
+		->order(['name'=>'ASC'])
 		->contain(['Items'=>function($q) use($item_name){
 			return $q->where(['name LIKE'=>'%'.$item_name.'%']);
 		}]);
-        $itemLedgers = $this->paginate($query);
-		
-        $this->set(compact('itemLedgers', 'item_name'));
+		$results =$query->toArray();
+		//pr($results);exit;
+		foreach($results as $result){
+			if($result->total_in - $result->total_out != 0){
+				$item_stocks[$result->item_id] = $result->total_in - $result->total_out;
+				$items_names[$result->item_id] = $result->item->name;
+			}
+		}
+		$itemLedgers = $this->paginate($query);
+        $this->set(compact('itemLedgers', 'item_name','item_stocks','items_names'));
+		$this->set('_serialize', ['itemLedgers']);
     }
 	
 	 public function materialindentreport(){

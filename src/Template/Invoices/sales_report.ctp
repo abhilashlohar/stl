@@ -1,5 +1,3 @@
-
-
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
@@ -16,24 +14,19 @@
 		
 	
 	<div class="portlet-body form">
-	<form method="GET" >
-				<table class="table table-condensed">
+		<form method="GET" >
+			<table width="50%" class="table table-condensed">
 				<tbody>
 					<tr>
-					<td>
-						<div class="row">
-							<div class="col-md-3">
-								<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @date('d-m-Y', strtotime($From));  ?>"  data-date-format="dd-mm-yyyy" >
-							</div>
-							<div class="col-md-3">
-								<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Transaction To" value="<?php echo @date('d-m-Y', strtotime($To));  ?>"  data-date-format="dd-mm-yyyy" >
-							</div>
-							<div class="col-md-3">
-								<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button>
-							</div>
-						</div>
-					</td>
-					
+						<td width="2%">
+							<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Transaction From" value="<?php echo @date('d-m-Y', strtotime($From));  ?>"  data-date-format="dd-mm-yyyy">
+						</td>	
+						<td width="2%">
+							<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Transaction To" value="<?php echo @date('d-m-Y', strtotime($To));  ?>"  data-date-format="dd-mm-yyyy" >
+						</td>
+						<td width="10%">
+							<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -51,13 +44,13 @@
 						<th>Invoice No</th>
 						<th>Date</th>
 						<th>Customer</th>
-						<th>Sales @ 5.50 %</th>
-						<th>VAT @5.50 %</th>
-						<th>Sales @ 14.50 %</th>
-						<th>VAT @14.50 %</th>
-						<th>2 % CST Sale</th>
-						<th>CST @ 2 %</th>
-						<th>Sale NIL Tax</th>
+						<th style="text-align:right;">Sales @ 5.50 %</th>
+						<th style="text-align:right;">VAT @5.50 %</th>
+						<th style="text-align:right;">Sales @ 14.50 %</th>
+						<th style="text-align:right;">VAT @14.50 %</th>
+						<th style="text-align:right;">2 % CST Sale</th>
+						<th style="text-align:right;">CST @ 2 %</th>
+						<th style="text-align:right;">Sale NIL Tax</th>
 					</tr>
 				</thead>
 				<tbody><?php $sales5=0; $vat5=0; $sales14=0; $vat14=0; $sales2=0; $vat2=0; $sales0=0; ?>
@@ -67,47 +60,47 @@
 							<td><?= h(($invoice->in1.'/IN-'.str_pad($invoice->in2, 3, '0', STR_PAD_LEFT).'/'.$invoice->in3.'/'.$invoice->in4)) ?></td>
 							<td><?php echo date("d-m-Y",strtotime($invoice->date_created)); ?></td>
 							<td><?php echo $invoice->customer->customer_name.'('.$invoice->customer->alias.')'?></td>
-							<td><?php if($invoice->sale_tax_per==5.50){
-								echo $invoice->total_after_pnf;
+							<td align="right"><?php if($invoice->sale_tax_per==5.50){
+								echo number_format($invoice->total_after_pnf,2,'.',',');
 								$sales5=$sales5+$invoice->total_after_pnf;
 							}else{
 								echo "-";
 							} ?>
 							</td>
-							<td><?php if($invoice->sale_tax_per==5.50){
-								echo $invoice->sale_tax_amount;
+							<td align="right"><?php if($invoice->sale_tax_per==5.50){
+								echo number_format($invoice->sale_tax_amount,2,'.',',');
 								$vat5=$vat5+$invoice->sale_tax_amount;
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($invoice->sale_tax_per==14.50){
-								echo $invoice->total_after_pnf;
+							<td align="right"><?php if($invoice->sale_tax_per==14.50){
+								echo number_format($invoice->total_after_pnf,2,'.',',');
 								$sales14=$sales14+$invoice->total_after_pnf;
 							}else{
 								echo "-";
 							} ?>
 							</td>
-							<td><?php if($invoice->sale_tax_per==14.50){
-								echo $invoice->sale_tax_amount;
+							<td align="right"><?php if($invoice->sale_tax_per==14.50){
+								echo number_format($invoice->sale_tax_amount,2,'.',',');
 								$vat14=$vat14+$invoice->sale_tax_amount;
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($invoice->sale_tax_per==2.00){
-								echo $invoice->total_after_pnf;
+							<td align="right"><?php if($invoice->sale_tax_per==2.00){
+								echo number_format($invoice->total_after_pnf,2,'.',',');
 								$sales2=$sales2+$invoice->total_after_pnf;
 							}else{
 								echo "-";
 							} ?>
 							</td>
-							<td><?php if($invoice->sale_tax_per==2.00){
-								echo $invoice->sale_tax_amount;
+							<td align="right"><?php if($invoice->sale_tax_per==2.00){
+								echo number_format($invoice->sale_tax_amount,2,'.',',');
 								$vat2=$vat2+$invoice->sale_tax_amount;
 							}else{
 								echo "-";
 							} ?></td>
-							<td><?php if($invoice->sale_tax_per==0.00){
-								echo $invoice->total_after_pnf;
+							<td align="right"><?php if($invoice->sale_tax_per==0.00){
+								echo number_format($invoice->total_after_pnf,2,'.',',');
 								$sales0=$sales0+$invoice->total_after_pnf;
 							}else{
 								echo "-";
@@ -116,22 +109,17 @@
 				<?php endforeach; ?>
 				<tr>
 					<td colspan="4" align="right">Total</td>
-					<td><?php echo number_format($sales5,2,'.',','); ?></td>
-					<td><?php echo number_format($vat5,2,'.',','); ?></td>
-					<td><?php echo number_format($sales14,2,'.',','); ?></td>
-					<td><?php echo number_format($vat14,2,'.',','); ?></td>
-					<td><?php echo number_format($sales2,2,'.',','); ?></td>
-					<td><?php echo number_format($vat2,2,'.',','); ?></td>
-					<td><?php echo number_format($sales0,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($sales5,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($vat5,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($sales14,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($vat14,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($sales2,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($vat2,2,'.',','); ?></td>
+					<td align="right"><?php echo number_format($sales0,2,'.',','); ?></td>
 				</tr>
 				</tbody>
 			</table>
 			</div>
 		</div>
-		</div>
-		
-		
-		<!-- END FORM-->
-
-
+	</div>
 </div>
