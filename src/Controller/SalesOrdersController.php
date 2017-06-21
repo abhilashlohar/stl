@@ -300,7 +300,7 @@ class SalesOrdersController extends AppController
 		
 		$sales_id=$this->request->query('copy');
 		$job_id=$this->request->query('job');
-		//pr($sales_id); exit;
+		//pr($process_status); exit;
 		
 		if(!empty($sales_id)){ 
 			
@@ -312,7 +312,7 @@ class SalesOrdersController extends AppController
 			->where(['CustomerContacts.default_contact'=>1]);
 			}],'Employees','SalesOrderRows'=>['Items']]
 			]);
-			//pr($salesOrder); exit; 
+			$process_status='Copy';
 			
 		}
 		elseif(!empty($job_id)){
@@ -410,10 +410,11 @@ class SalesOrdersController extends AppController
 					}
 				);
 		$copy=$this->request->query('copy');
+		//pr ($copy); exit;
 		if(!empty($copy)){
-			$process_status='';
+			$process_status='Copy';
 		}
-		//pr ($salesOrder->customer_id); exit;
+		//pr ($process_status); exit;
 		if($quotation_id){
 			$Filenames = $this->SalesOrders->Filenames->find()->where(['customer_id' => $quotation->customer_id]);
 		}elseif($id){
@@ -443,7 +444,7 @@ class SalesOrdersController extends AppController
 					} 
 				);
 		
-		
+		//pr($salesOrder); exit; 
         $this->set(compact('salesOrder', 'customers', 'companies','quotationlists','items','transporters','Filenames','termsConditions','serviceTaxs','exciseDuty','employees','SaleTaxes','copy','process_status','Company','chkdate','financial_year','sales_id','salesOrder_copy','job_id','salesOrder_data'));
         $this->set('_serialize', ['salesOrder']);
     }

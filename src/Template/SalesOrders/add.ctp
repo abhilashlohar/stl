@@ -8,7 +8,7 @@
 }
 </style>
 
-<?php 
+<?php   
 if(!empty($copy))
 {
 	//pr($salesOrder->po_date); exit;
@@ -208,9 +208,9 @@ if(!empty($copy))
 					</tr>
 				</thead>
 				<tbody id="main_tbody">
-					<?php 
-					if(!empty($process_status) || !empty($quotation)) 
-					{
+					<?php  
+					if(!empty($process_status=="Pulled From Quotation") || !empty($quotation)) 
+					{ pr ($copy); exit;
 					if(!empty($quotation->quotation_rows)){
 					$q=0; foreach ($quotation->quotation_rows as $quotation_rows): 
 					if($quotation_rows->quantity==$quotation_rows->proceed_qty){$disable_class="disabledbutton";
@@ -264,7 +264,7 @@ if(!empty($copy))
 							</td>
 							<td></td>
 						</tr>
-					<?php $q++; endforeach; } } elseif(!empty($copy)) {
+					<?php $q++; endforeach; } } elseif(!empty($copy)) { 
 					if(!empty($salesOrder->sales_order_rows)){
 					$q=0; foreach ($salesOrder->sales_order_rows as $sales_order_rows): ?>
 						<tr class="tr1 maintr" row_no='<?php echo @$sales_order_rows->id; ?>'>
