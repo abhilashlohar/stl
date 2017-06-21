@@ -22,7 +22,7 @@
 					<?php } ?>
 				</ul>
 			</div>
-			<div class="col-md-7"> 
+			<div class="col-md-9"> 
 				<?= $this->Form->create($InventoryVoucher,['id'=>'form_sample_3']) ?>
 				<table class="table tableitm" id="main_tb">
 					<tbody id="m_tbody">
@@ -53,7 +53,7 @@
 						<tr>
 							<th>Item</th>
 							<th style="width: 80px;">Quantity</th>
-							<th style="width: 200px;">Serial Number</th>
+							<th style="width: 500px;">Serial Number</th>
 							<th></th>
 							<th></th>
 						</tr>
