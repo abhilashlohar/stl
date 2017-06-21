@@ -7,45 +7,52 @@
 		<div class="portlet-body">
 			<div class="row">
 				<div class="col-md-12">
-				<form method="GET" >
-				<table width="30%">
-					<tbody>
-						<tr>
-							<td><input type="text" name="item_name" class="form-control input-sm" placeholder="Item Name" value="<?php echo @$item_name; ?>"></td>
-							<td><button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button></td>
-						</tr>
-					</tbody>
-				</table>
-				</form>
-				<?php $page_no=$this->Paginator->current('ItemLedgers'); $page_no=($page_no-1)*20; ?>
-				<table class="table table-bordered table-striped table-hover">
+				<input type="text" class="form-control input-sm pull-right" placeholder="Search..." id="search3"  style="width: 20%;">
+				
+				<div class="col-md-12"><br/></div>
+				<table class="table table-bordered table-striped table-hover" id="main_tble">
 					<thead>
 						<tr>
 							<th>Sr. No.</th>
-							<th><?= $this->Paginator->sort('item_id') ?></th>
+							<th>Item</th>
 							<th>Current Stock</th>
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($itemLedgers as $itemLedger): ?>
+						<?php $page_no=0; foreach ($item_stocks as $key=> $item_stock): ?>
+							
 						<tr>
 							<td><?= h(++$page_no) ?></td>
-							<td><?= $this->Html->link($itemLedger->item->name, ['controller' => 'ItemLedgers', 'action' => 'index', $itemLedger->item->id]) ?></td>
-							<td><?= h($itemLedger->total_in-$itemLedger->total_out) ?></td>
+							<td><?= $this->Html->link($items_names[$key], ['controller' => 'ItemLedgers', 'action' => 'index',$key]) ?></td>
+							<td><?= h($item_stock) ?></td>
 						</tr>
+						
 						<?php endforeach; ?>
 					</tbody>
 				</table>
-				<div class="paginator">
-					<ul class="pagination">
-						<?= $this->Paginator->prev('< ' . __('previous')) ?>
-						<?= $this->Paginator->numbers() ?>
-						<?= $this->Paginator->next(__('next') . ' >') ?>
-					</ul>
-					<p><?= $this->Paginator->counter() ?></p>
-				</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<?php echo $this->Html->script('/assets/global/plugins/jquery.min.js'); ?>
+<script>
+$(document).ready(function() {
+var $rows = $('#main_tble tbody tr');
+	$('#search3').on('keyup',function() {
+	
+			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    		var v = $(this).val();
+    		if(v){ 
+    			$rows.show().filter(function() {
+    				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		
+    				return !~text.indexOf(val);
+    			}).hide();
+    		}else{
+    			$rows.show();
+    		}
+    	});
+});
+		
+</script>
