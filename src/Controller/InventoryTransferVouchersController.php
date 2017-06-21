@@ -84,13 +84,16 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
-						function($q) use($st_company_id){
-											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
-				}
 		
-		]);
-		//pr($display_items); exit;
+			
+		
+		$display_items = $this->InventoryTransferVouchers->Items->find()->matching(
+					'ItemCompanies', function ($q) use($st_company_id) {
+						return $q->where(['ItemCompanies.company_id' => $st_company_id,'ItemCompanies.freeze' => 0]);
+					} 
+				);
+		
+		//pr($display_items->toArray()); exit;
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 	
         if ($this->request->is('post')) {
@@ -531,12 +534,11 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
-						function($q) use($st_company_id){
-											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
-				}
-		
-		]);
+		$display_items = $this->InventoryTransferVouchers->Items->find()->matching(
+					'ItemCompanies', function ($q) use($st_company_id) {
+						return $q->where(['ItemCompanies.company_id' => $st_company_id,'ItemCompanies.freeze' => 0]);
+					} 
+				);
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
@@ -602,12 +604,11 @@ class InventoryTransferVouchersController extends AppController
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
 		$s_employee_id=$this->viewVars['s_employee_id'];
-		$display_items = $this->InventoryTransferVouchers->Items->find()->contain(['ItemSerialNumbers','ItemCompanies'=>
-						function($q) use($st_company_id){
-											return $q->where(['ItemCompanies.company_id'=>$st_company_id]);
-				}
-		
-		]);
+		$display_items = $this->InventoryTransferVouchers->Items->find()->matching(
+					'ItemCompanies', function ($q) use($st_company_id) {
+						return $q->where(['ItemCompanies.company_id' => $st_company_id,'ItemCompanies.freeze' => 0]);
+					} 
+				);
 		$inventoryTransferVoucher = $this->InventoryTransferVouchers->newEntity();
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
