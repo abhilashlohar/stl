@@ -335,7 +335,7 @@ class InventoryVouchersController extends AppController
 				
 			$query = $this->InventoryVouchers->Invoices->query();
 			$query->update()
-				->set(['inventory_voucher_status' => 'Completed'])
+				->set(['Invoices.inventory_voucher_status' => 'Completed'])
 				->where(['Invoices.id' => $invoice_id])
 				->execute();
 		}

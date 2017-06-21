@@ -34,6 +34,10 @@ class LeaveTypesTable extends Table
         $this->displayField('leave_name');
         $this->primaryKey('id');
 		$this->belongsTo('Employees');
+		$this->belongsTo('Ledgers');
+		$this->belongsTo('Payments');
+		$this->belongsTo('ReferenceBalances');
+		$this->belongsTo('ReferenceDetails');
     }
 
     /**
