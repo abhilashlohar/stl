@@ -740,14 +740,14 @@ class InvoiceBookingsController extends AppController
 		$From=$this->request->query('From');
 		$To=$this->request->query('To');
 		$where=[];
-		
+		$this->set(compact('From','To'));
 		if(!empty($From)){
 			$From=date("Y-m-d",strtotime($this->request->query('From')));
-			$where['transaction_date >=']=$From;
+			$where['InvoiceBookings.created_on >=']=$From;
 		}
 		if(!empty($To)){
 			$To=date("Y-m-d",strtotime($this->request->query('To')));
-			$where['transaction_date <=']=$To;
+			$where['InvoiceBookings.created_on <=']=$To;
 		}
 		
 		$this->viewBuilder()->layout('index_layout');

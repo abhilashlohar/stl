@@ -812,6 +812,7 @@ class SaleReturnsController extends AppController
 		$st_company_id = $session->read('st_company_id');
 		$From=$this->request->query('From');
 		$To=$this->request->query('To');
+		$this->set(compact('From','To'));
 		$where=[];
 		$this->viewBuilder()->layout('index_layout');
 		$SaleReturns = $this->SaleReturns->find()->contain(['SaleReturnRows','Customers'])->order(['SaleReturns.id' => 'DESC'])->where(['SaleReturns.company_id'=>$st_company_id]);
