@@ -613,7 +613,7 @@ class InventoryTransferVouchersController extends AppController
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
             $inventoryTransferVoucher = $this->InventoryTransferVouchers->patchEntity($inventoryTransferVoucher, $this->request->data);
-			pr($inventoryTransferVoucher); exit;
+			//pr($inventoryTransferVoucher); exit;
 			$last_voucher_no=$this->InventoryTransferVouchers->find()->select(['voucher_no'])->where(['company_id' => $st_company_id])->order(['voucher_no' => 'DESC'])->first();
 			if($last_voucher_no){
 				$inventoryTransferVoucher->voucher_no=$last_voucher_no->voucher_no+1;
