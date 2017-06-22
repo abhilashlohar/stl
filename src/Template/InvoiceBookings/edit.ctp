@@ -569,7 +569,7 @@ $(document).ready(function() {
 			total_other=total_other+other;
 			
 			$(this).find("td:nth-child(12) input").val(row_total.toFixed(2));
-			$(this).find("td:nth-child(13) input").val((total_for_rate/qty).toFixed(5));
+			$(this).find("td:nth-child(13) input").val((total_for_rate/qty).toFixed(2));
 			
 			
 			total_row_amount=total_row_amount+row_total;
