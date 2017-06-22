@@ -242,6 +242,7 @@ $(document).ready(function() {
 	
 	function sr_nos(tr_obj){ 
 		var serial_number_enable=tr_obj.find('td:nth-child(1) select option:selected').attr('serial_number_enable');
+		//alert(serial_number_enable);
 		if(serial_number_enable==1){
 			var qty=tr_obj.find('td:nth-child(2) input').val();
 			var row_no=tr_obj.attr('row_no');
@@ -250,7 +251,7 @@ $(document).ready(function() {
 				tr_obj.find('td:nth-child(3) div.sr_container').append('<input type="text" name="inventory_transfer_voucher_rows[in]['+row_no+'][sr_no]['+w+']" id="inventory_transfer_voucher_rows-in-'+row_no+'-sr_no-'+w+'" required="required" placeholder="serial number '+w+'" />');
 			}
 		}else{
-			tr_obj.find('td:nth-child(3)').html('');
+			tr_obj.find('td:nth-child(3) div.sr_container').html('');
 		}
 		
 	}
@@ -338,8 +339,10 @@ $(document).ready(function() {
 			<td>
 				<?php 
 				$item_option=[];
-				foreach($display_items as $Item){ 
-					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
+				foreach($display_items as $Item){  
+					if(sizeof($Item->item_companies) > 0 ){
+						$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
+					}
 				}
 				echo $this->Form->input('q', ['empty'=>'Select','options' => $item_option,'label' => false,'style'=>' display: block; width:80%;','class' => 'form-control input-sm select_item_out item_id']); ?>
 			</td>
@@ -360,8 +363,10 @@ $(document).ready(function() {
 			<td width="20%">
 				<?php 
 				$item_option=[];
-				foreach($display_items as $Item){ 
-					$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
+				foreach($display_items as $Item){  
+					if(sizeof($Item->item_companies) > 0 ){
+						$item_option[]=['text' =>$Item->name, 'value' => $Item->id, 'serial_number_enable' => (int)@$Item->item_companies[0]->serial_number_enable];
+					}
 				}
 				echo $this->Form->input('q', ['empty'=>'Select','options' => $item_option,'label' => false,'style'=>'width: 80px; display: block;','class' => 'form-control input-sm select_item_in item_id']); ?>
 			</td>
