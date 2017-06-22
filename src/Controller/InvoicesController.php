@@ -130,7 +130,7 @@ class InvoicesController extends AppController
 				$status=1;
 		}
 		//pr($status);exit;
-		$this->set(compact('invoices','status','sales_return','InvoiceRows'));
+		$this->set(compact('invoices','status','sales_return','InvoiceRows','invoice_no'));
         $this->set('_serialize', ['invoices']);
 		$this->set(compact('url'));
 	}

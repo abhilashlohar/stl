@@ -84,6 +84,31 @@ class InvoiceBookingsController extends AppController
 		$this->set(compact('url'));
     }
 
+	public function PurchaseReturnIndex($status = null){
+		$this->viewBuilder()->layout('index_layout');
+		$url=$this->request->here();
+		$url=parse_url($url,PHP_URL_QUERY);
+		$session = $this->request->session();
+		$st_company_id = $session->read('st_company_id');
+		$purchase_return=$this->request->query('purchase-return');
+		$status=$this->request->query('status');
+		@$book_no = $this->request->query('book_no');
+		$where=[];
+		$status = 0 ;
+		if(!empty($book_no)){
+			$book_no=$this->request->query('book_no');
+			if(!empty($book_no)){
+				$where['InvoiceBookings.ib2 LIKE']=$book_no;
+			}
+			$invoiceBookings =$this->InvoiceBookings->find()->contain(['Grns','Vendors'])->where($where)->where(['InvoiceBookings.company_id'=>$st_company_id])->order(['InvoiceBookings.id' => 'DESC']);
+			$status=1;
+		}	
+		//pr($invoiceBookings->toArray());exit;
+		$this->set(compact('invoiceBookings','status','purchase_return','book_no'));
+        $this->set('_serialize', ['invoiceBookings']);
+		$this->set(compact('url'));
+	}
+	
     /**
      * View method
      *
@@ -755,5 +780,7 @@ class InvoiceBookingsController extends AppController
 		//pr($InvoiceBookings->toArray()); exit;
 		$this->set(compact('InvoiceBookings'));
 	}
+	
+	
 
 }

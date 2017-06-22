@@ -7,7 +7,7 @@
 		</div>
 	<div class="portlet-body">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12"><?php if($status==0){?>
 				<form method="GET">
 					<table class="table table-condensed">
 						<tbody>
@@ -17,38 +17,28 @@
 									<span class="input-group-addon">IB-No</span><input type="text" name="book_no" class="form-control input-sm" placeholder="Invoice Booking No" value="<?php echo @$book_no; ?>">
 									</div>
 								</td>
-								<td width="9%">
-									<input type="text" name="file" class="form-control input-sm" placeholder="IB File" value="<?php echo @$file; ?>">
-								</td>
-								<td width="15%">
+								<td><button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			<?php } else if($status==1){ 
+			 $page_no=$this->Paginator->current('InvoiceBookings'); $page_no=($page_no-1)*20; ?>
+				<form method="GET">
+					<table class="table table-condensed">
+						<tbody>
+							<tr>
+								<td width="18%">
+									<input type='hidden' name='status' value='1' />
 									<div class="input-group" style="" id="pnf_text">
-									<span class="input-group-addon">Grn-No</span><input type="text" name="grn_no" class="form-control input-sm" placeholder="Grn No" value="<?php echo @$grn_no; ?>">
+									<span class="input-group-addon">IB-No</span><input type="text" name="book_no" class="form-control input-sm" placeholder="Invoice Booking No" value="<?php echo @$book_no; ?>">
 									</div>
-								</td>
-								<td width="5%">
-									<input type="text" name="file_grn_no" class="form-control input-sm" placeholder="Grn File" value="<?php echo @$file_grn_no; ?>">
-								</td>
-								<td width="13%">
-									<div class="input-group" style="" id="pnf_text">
-									<span class="input-group-addon">IN</span><input type="text" name="in_no" class="form-control input-sm" placeholder="Invoice No" value="<?php echo @$in_no; ?>">
-									</div>
-								</td>
-								<td width="14%">
-									<input type="text" name="vendor_name" class="form-control input-sm" placeholder="Supplier Name" value="<?php echo @$vendor_name; ?>">
-								</td>
-								<td width="10%">
-									<input type="text" name="From" class="form-control input-sm date-picker" placeholder="Date From" value="<?php echo @$From; ?>" data-date-format="dd-mm-yyyy" >
-								</td>
-								<td width="10%">
-									<input type="text" name="To" class="form-control input-sm date-picker" placeholder="Date To" value="<?php echo @$To; ?>" data-date-format="dd-mm-yyyy" >
 								</td>
 								<td><button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> Filter</button></td>
 						</tr>
 					</tbody>
 				</table>
 			</form>
-			<?php $page_no=$this->Paginator->current('InvoiceBookings'); $page_no=($page_no-1)*20; ?>
-				
 					<table class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
@@ -92,19 +82,9 @@
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-				
-				<div class="paginator">
-					<ul class="pagination">
-						<?= $this->Paginator->prev('< ' . __('previous')) ?>
-						<?= $this->Paginator->numbers() ?>
-						<?= $this->Paginator->next(__('next') . ' >') ?>
-					</ul>
-					<p><?= $this->Paginator->counter() ?></p>
+				<?php } ?>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<?php echo $this->Html->script('/assets/global/plugins/jquery.min.js'); ?>
-
+</div>	

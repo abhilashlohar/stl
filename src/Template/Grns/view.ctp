@@ -65,9 +65,9 @@ margin-bottom: 0;
 						<td valign="top"><?= h(date("d-m-Y",strtotime($grn->date_created))) ?></td>
 					</tr>
 					<tr>
-						<td  width="38%" valign="top">Road Permit No</td>
+						<td  width="50%" valign="top">Road Permit No</td>
 						<td  width="2%" valign="top">:</td>
-						<td valign="top"><?= h(($grn->road_permit_no)) ?></td>
+						<td valign="top" align="center"><?= h(($grn->road_permit_no)) ?></td>
 					</tr>
 				</table>
 			</td>
