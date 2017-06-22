@@ -191,7 +191,7 @@
 							
 							<td><?php echo $this->Form->input('invoice_booking_rows.'.$q.'.total',['label' => false,'class' => 'form-control input-sm row_textbox','type'=>'text','readonly']); ?></td>
 							
-							<td><?php echo $this->Form->input('invoice_booking_rows.'.$q.'.rate',['label' => false,'class' => 'form-control input-sm row_textbox','value'=>$invoice_booking_row->rate,'type'=>'text','readonly']); ?></td>
+							<td><?php echo $this->Form->input('invoice_booking_rows.'.$q.'.rate',['label' => false,'class' => 'form-control input-sm row_textbox','value'=>$this->Number->format($invoice_booking_row->rate,['places'=>2]),'type'=>'text','readonly']); ?></td>
 							
 							
 						</tr>
@@ -346,7 +346,7 @@ $(document).ready(function() {
 		$('#main_tb thead th:eq(9)').text('VAT');
 		$('input[name="cst_vat"]').val('VAT');
 		$(".rmvcls").addClass("vattext");
-			$('.vattext').val(0);
+			//$('.vattext').val(0);
 		$('#ledger_account_for_vat').show();
 			$('.vattext').die().live("blur",function() {
 			var text = $(this).val();

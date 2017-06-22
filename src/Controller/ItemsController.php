@@ -290,12 +290,13 @@ class ItemsController extends AppController
 		
 		$financial_year = $this->Items->FinancialYears->find()->where(['id'=>$st_year_id])->first();
 		$ItemLedger = $this->Items->ItemLedgers->get($id);
+
 		$Items = $this->Items->find()->where(['id'=>$ItemLedger->item_id])->first();
 		$SerialNumberEnable = $this->Items->ItemCompanies->find()->where(['item_id'=>$ItemLedger->item_id
 		,'company_id'=>$st_company_id])->toArray();
 		$ItemSerialNumbers = $this->Items->ItemSerialNumbers->find()->where(['item_id'=>$ItemLedger->item_id
 		,'company_id'=>$st_company_id,'grn_id'=>0])->toArray();
-		
+		//pr($ItemSerialNumbers);exit;
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$item_id=$this->request->data['item_id'];
@@ -397,19 +398,21 @@ class ItemsController extends AppController
 			//pr($ItemQuantity);exit;
 			if($ItemQuantity == 0){
 				$this->Items->ItemLedgers->delete($ItemLedger);
+				$this->Items->ItemSerialNumbers->delete($ItemSerialNumber);
 				$this->Flash->success(__('The Item has been deleted.'));
 				return $this->redirect(['action' => 'Opening-Balance']);
 				
 			}else{
 			$query = $this->Items->ItemLedgers->query();
 			$query->update()
-				->set(['quantity' => $ItemLedger->quantity-1])
+				->set(['quantity' => $ItemQuantity])
 				->where(['item_id' => $item_id,'company_id'=>$st_company_id,'source_model'=>'Items'])
 				->execute();
-					
 			$this->Items->ItemSerialNumbers->delete($ItemSerialNumber);
 			$this->Flash->success(__('The Serial Number has been deleted.'));
-			}
+			}	
+			
+			
 		}else{ 
 			if($ItemSerialNumber_invoice_id->id != 0){
 				$this->Flash->error(__('The Serial Number could not be deleted. These item out from invoice number: '.$ItemSerialNumber_invoice_id->in1.'-'.$ItemSerialNumber_invoice_id->in2.'/'.$ItemSerialNumber_invoice_id->in4.'/'.$ItemSerialNumber_invoice_id->in3));

@@ -174,6 +174,14 @@ class LeaveTypesController extends AppController
 	//pr($LeaveType->toArray()); exit;
 	$this->set(compact('requestTravellings','Employee','LeaveType'));
 	}
+	public function checkData()
+	{
+		$Ledgers = $this->LeaveTypes->Ledgers->find()->where(['voucher_source'=>'Payment Voucher'])->toArray();
+		$ReferenceDetails = $this->LeaveTypes->ReferenceDetails->find()->where(['payment_id !='=>0])->toArray();
+		pr($Ledgers); exit;
+		pr($ReferenceDetails); exit;
+		exit;
+	}
 	
 }
 

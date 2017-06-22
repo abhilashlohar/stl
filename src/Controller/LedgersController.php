@@ -524,7 +524,7 @@ class LedgersController extends AppController
 					return $exp->between('transaction_date', $transaction_from_date, $transaction_to_date, 'date');
 				})->order(['transaction_date' => 'DESC']);
 				//pr($Ledgers->toArray()); exit;
-		}
+		
 			$url_link=[];
 			foreach($Ledgers as $ledger){
 				if($ledger->voucher_source=="Journal Voucher"){
@@ -550,7 +550,8 @@ class LedgersController extends AppController
 				}else if($ledger->voucher_source=="Purchase Return"){
 					$url_link[$ledger->id]=$this->Ledgers->PurchaseReturns->get($ledger->voucher_id);
 				}
-			}	
+			}
+}			
 			//pr($url_link->toArray()); 
 			//exit;
 			$ledger=$this->Ledgers->LedgerAccounts->find('list',
