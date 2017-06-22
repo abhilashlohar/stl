@@ -22,7 +22,7 @@ margin-bottom: 0;
 </style>
 
 <a class="btn  blue hidden-print margin-bottom-5 pull-right" onclick="javascript:window.print();">Print <i class="fa fa-print"></i></a>
-<div style="border:solid 1px #c7c7c7;background-color: #FFF;padding: 10px;margin: auto;width: 70%;font-size:14px;" class="maindiv">	
+<div style="border:solid 1px #c7c7c7;background-color: #FFF;padding: 10px;margin: auto;width: 55%;font-size:12px;" class="maindiv">	
 <table width="100%" class="divHeader">
 		
 		<tr>
@@ -36,7 +36,7 @@ margin-bottom: 0;
 		</tr>
 		<tr>
 			<td colspan="3">
-				<div style="border:solid 2px #0685a8;margin-bottom:5px;margin-top: 5px;"></div>
+				<div style="border:solid 2px #0685a8;margin-bottom:-12px;margin-top: 7px;"></div>
 			</td>
 		</tr>
 	</table>
@@ -57,7 +57,7 @@ margin-bottom: 0;
 					</tr>
 				</table>
 			</td>
-			<td width="50%" valign="top" align="center">
+			<td width="50%" valign="top" align="right">
 				<table>
 					<tr>
 						<td  width="48%" valign="top">Date.</td>
