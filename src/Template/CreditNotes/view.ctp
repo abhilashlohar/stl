@@ -93,13 +93,43 @@ margin-bottom: 0;
 			<th>Ref No</th>
 			<th>Credit</th>
 		</tr>
-		<?php  foreach($ReferenceDetails as $ReferenceDetail){   ?>
+		<?php $dr_amt=0; $cr_amt=0;  foreach($ReferenceDetails as $ReferenceDetail){   ?>
 		<tr>
 			<td width="30%"><?=h($ReferenceDetail->reference_type) ?></td>
 			<td><?=h($ReferenceDetail->reference_no) ?></td>
 			<td>Rs.<?=h($this->Number->format($ReferenceDetail->credit,[ 'places' => 2])) ?></td>
 		</tr>
+		<?php 
+					
+					if($ReferenceDetail->credit != '0' ){ 
+						$cr_amt=$cr_amt+$ReferenceDetail->credit;
+					} elseif( $ReferenceDetail->debit != '0'){
+						$dr_amt=$dr_amt+$ReferenceDetail->debit;
+					} ?>
 		<?php  } ?>
+		<?php 
+				if($credit_notes_row->cr_dr == 'Dr' ){ 
+					$on_acc=$credit_notes_row->amount-($dr_amt-$cr_amt);
+
+					if($on_acc > 0) {?>
+						<tr>
+							<td style="width :180px !important;"> <?php echo "On Account";  ?></td>
+							<td>:</td>
+							<td > <?= h($this->Number->format($on_acc,['places'=>2])); ?>Dr
+								
+							</td>
+						</tr>
+					<?php }} elseif( $credit_notes_row->cr_dr == 'Cr'){
+						$on_acc1=$credit_notes_row->amount-($cr_amt-$dr_amt);
+
+					if($on_acc1 > 0) {?>
+						<tr>
+							<td style="width :180px !important;"> <?php echo "On Account";  ?></td>
+							<td>:</td>
+							<td > <?= h($this->Number->format($on_acc1,['places'=>2])); ?>Cr
+					<?php }} ?>
+							</td>
+						</tr>
 	</table>
 	
 	<br/>

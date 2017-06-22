@@ -89,7 +89,7 @@ margin-bottom: 0;
 		<td colspan="3" style="border-top:none !important;">
 			<table width="100%">
 			
-			<?php foreach($ref_bal[$petty_cash_voucher_row->received_from_id] as $refbal): ?>
+			<?php $dr_amt=0; $cr_amt=0; foreach($ref_bal[$petty_cash_voucher_row->received_from_id] as $refbal): ?>
 			<tr>
 					<td style="width :180px !important;"> <?= h($refbal->reference_type). '-' .h($refbal->reference_no) ?></td>
 					
@@ -99,7 +99,36 @@ margin-bottom: 0;
 					<?= h($refbal->debit) ?> Dr
 					<?php } ?></td>
 					</tr>
+					<?php 
+					if($refbal->credit != '0' ){ 
+						$cr_amt=$cr_amt+$refbal->credit;
+					} elseif( $refbal->debit != '0'){
+						$dr_amt=$dr_amt+$refbal->debit;
+					} ?>
 			<?php endforeach; ?>
+			<?php 
+				if($petty_cash_voucher_row->cr_dr == 'Dr' ){ 
+					$on_acc=$petty_cash_voucher_row->amount-($dr_amt-$cr_amt);
+
+					if($on_acc > 0) {?>
+						<tr>
+							<td style="width :180px !important;"> <?php echo "On Account";  ?></td>
+							<td>:</td>
+							<td > <?= h($this->Number->format($on_acc,['places'=>2])); ?>Dr
+								
+							</td>
+						</tr>
+					<?php }} elseif( $petty_cash_voucher_row->cr_dr == 'Cr'){
+						$on_acc1=$petty_cash_voucher_row->amount-($cr_amt-$dr_amt);
+
+					if($on_acc1 > 0) {?>
+						<tr>
+							<td style="width :180px !important;"> <?php echo "On Account";  ?></td>
+							<td>:</td>
+							<td > <?= h($this->Number->format($on_acc1,['places'=>2])); ?>Cr
+					<?php }} ?>
+							</td>
+						</tr>
 			</table>
 		</td>
 		
