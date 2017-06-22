@@ -242,7 +242,6 @@ $(document).ready(function() {
 	
 	function sr_nos(tr_obj){ 
 		var serial_number_enable=tr_obj.find('td:nth-child(1) select option:selected').attr('serial_number_enable');
-		alert(serial_number_enable);
 		if(serial_number_enable==1){
 			var qty=tr_obj.find('td:nth-child(2) input').val();
 			var row_no=tr_obj.attr('row_no');
