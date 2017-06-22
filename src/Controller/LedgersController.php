@@ -504,8 +504,9 @@ class LedgersController extends AppController
 		
 		$session = $this->request->session();
 		$st_company_id = $session->read('st_company_id');
+        $st_year_id = $session->read('st_year_id');
 		$ledger_account_id=$this->request->query('ledger_account_id');
-
+		$financial_year = $this->Ledgers->FinancialYears->find()->where(['id'=>$st_year_id])->first();
 		if($ledger_account_id)
 		{
 			$Ledger_Account_data = $this->Ledgers->LedgerAccounts->get($ledger_account_id, [
@@ -567,7 +568,7 @@ class LedgersController extends AppController
 					
 				}])->where(['company_id'=>$st_company_id]);
 		//pr($ledger->toArray()); exit;
-			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data','url_link','transaction_from_date','transaction_to_date'));		
+			$this->set(compact('Ledgers','ledger','ledger_account_id','Ledger_Account_data','url_link','transaction_from_date','transaction_to_date','financial_year'));		
 		
 	}
 	
