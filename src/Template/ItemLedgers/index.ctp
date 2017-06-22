@@ -13,7 +13,6 @@
 						<tr>
 							<th>Sr. No.</th>
 							<th><?= $this->Paginator->sort('processed_on') ?></th>
-							<th>Customer/Supplier/Vendor Name</th>
 							<th>Party</th>
 							<th>Voucher No.</th>
 							<th>Voucher Source</th>
@@ -50,6 +49,8 @@
 						}
 						else if($party=='Supplier')
 						{
+							$data=$itemLedger->voucher_info['created_on'];
+							//pr($data);
 							$party_name=$itemLedger->party_info->company_name;
 							$voucher_no='-';
 							
@@ -90,11 +91,14 @@
 						<tr <?php if($status_color==true){ echo 'style="background-color:red;color:white"'; } ?>>
 							
 							<td><?= h(++$page_no) ?></td>
-							<td><?= h(date("d-m-Y",strtotime($itemLedger->processed_on))) ?></td>
-							<?php if($party=='Item'){ ?>
-							<td><?php echo "-"; ?></td>
-						    <?php } else { ?>
-							<td><?= h($itemLedger->party_type)?></td><?php } ?>
+							<td>
+							<?php if($party=='Supplier'){ ?>
+							<?= h(date("d-m-Y",strtotime($data))) ?>
+							<?php }else{ ?>
+							<?= h(date("d-m-Y",strtotime($itemLedger->processed_on))) ?>
+							<?php } ?>
+							</td>
+							
 							<td><?= h($party_name) ?></td>
 							<td><?= h($voucher_no) ?></td>
 							<td><?= h($itemLedger->source_model) ?></td>

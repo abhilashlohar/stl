@@ -50,8 +50,8 @@ class ItemLedgersController extends AppController
 		
 		//return $source_model.$source_id;
 		if($source_model=="Grns"){
-			$Grn=$this->ItemLedgers->Grns->get($source_id);
-			
+			$Grn=$this->ItemLedgers->InvoiceBookings->find()->where(['grn_id'=>$source_id])->first();
+			//pr($Grn); exit;
 			$Vendor=$this->ItemLedgers->Vendors->get($Grn->vendor_id);
 			return ['voucher_info'=>$Grn,'party_type'=>'Supplier','party_info'=>$Vendor];
 		}

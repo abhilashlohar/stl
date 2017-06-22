@@ -176,18 +176,7 @@ $(document).ready(function() {
 			}
 		} 
 	});
-	
-	$('.deleterow_1').live("click",function() {
-		var l=$(this).closest("table tbody").find("tr").length;
-		if (confirm("Are you sure to remove row ?") == true) {
-			if(l>1){
-				var row_no=$(this).closest("tr").attr("row_no");
-				var del=$(this).closest("tr");
-				$(del).remove();
-				rename_rows_in();
-			}
-		} 
-	});
+
 	
 
 	function add_row_out(){
@@ -261,7 +250,7 @@ $(document).ready(function() {
 <table id="sampletable" style="display:none;">
 	<tbody>
 		<tr class="main">
-			<td>
+			<td width="40%">
 				<?php 
 				$item_option=[];
 				foreach($display_items as $Item){ 

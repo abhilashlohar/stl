@@ -218,7 +218,7 @@ $(document).ready(function() {
 	}
 	
 
-	function rename_rows_in(){
+	function rename_rows_in(){ 
 		var j=0;
 		$("#main_table_1 tbody#maintbody_1 tr.main").each(function(){
 			
