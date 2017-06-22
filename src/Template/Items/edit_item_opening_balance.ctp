@@ -130,3 +130,239 @@
 	<?= $this->Form->end() ?>
 	</div>
 </div>
+<?php echo $this->Html->script('/assets/global/plugins/jquery.min.js'); ?>
+<script>
+$(document).ready(function() {
+	
+	
+	//--------- FORM VALIDATION
+	var form3 = $('#form_sample_3');
+	var error3 = $('.alert-danger', form3);
+	var success3 = $('.alert-success', form3);
+	form3.validate({
+		errorElement: 'span', //default input error message container
+		errorClass: 'help-block help-block-error', // default input error message class
+		focusInvalid: true, // do not focus the last invalid input
+		rules: {
+			item_id :{
+				required: true,
+			},
+			quantity  : {
+				  required: true,
+			},
+			rate    : {
+				  required: true,
+				  min:0.01
+			}
+		},
+
+		messages: { // custom messages for radio buttons and checkboxes
+			membership: {
+				required: "Please select a Membership type"
+			},
+			service: {
+				required: "Please select  at least 2 types of Service",
+				minlength: jQuery.validator.format("Please select  at least {0} types of Service")
+			}
+		},
+
+		errorPlacement: function (error, element) { // render error placement for each input type
+			if (element.parent(".input-group").size() > 0) {
+				error.insertAfter(element.parent(".input-group"));
+			} else if (element.attr("data-error-container")) { 
+				error.appendTo(element.attr("data-error-container"));
+			} else if (element.parents('.radio-list').size() > 0) { 
+				error.appendTo(element.parents('.radio-list').attr("data-error-container"));
+			} else if (element.parents('.radio-inline').size() > 0) { 
+				error.appendTo(element.parents('.radio-inline').attr("data-error-container"));
+			} else if (element.parents('.checkbox-list').size() > 0) {
+				error.appendTo(element.parents('.checkbox-list').attr("data-error-container"));
+			} else if (element.parents('.checkbox-inline').size() > 0) { 
+				error.appendTo(element.parents('.checkbox-inline').attr("data-error-container"));
+			} else {
+				error.insertAfter(element); // for other inputs, just perform default behavior
+			}
+		},
+
+		invalidHandler: function (event, validator) { //display error alert on form submit   
+			success3.hide();
+			error3.show();
+			//Metronic.scrollTo(error3, -200);
+		},
+
+		highlight: function (element) { // hightlight error inputs
+		   $(element)
+				.closest('.form-group').addClass('has-error'); // set error class to the control group
+		},
+
+		unhighlight: function (element) { // revert the change done by hightlight
+			$(element)
+				.closest('.form-group').removeClass('has-error'); // set error class to the control group
+		},
+
+		success: function (label) {
+			label
+				.closest('.form-group').removeClass('has-error'); // set success class to the control group
+		},
+
+		submitHandler: function (form) {
+			success3.show();
+			error3.hide();
+			form[0].submit(); // submit the form
+		}
+
+	});
+	//--	 END OF VALIDATION
+	function calculate_value()
+	{
+		var quantity=parseFloat($('input[name="quantity"]').val());
+		//alert(quantity);
+		var newquantity=parseFloat($('input[name="new_quantity"]').val());
+		
+		var totalquantity = quantity+newquantity;
+		if(isNaN(totalquantity)) { var totalquantity = 0; }
+		var rate=parseFloat($('input[name="rate"]').val());
+		if(isNaN(rate)) { var rate = 0; }
+		var total=totalquantity*rate;
+		$('input[name="value"]').val(total.toFixed(2));
+	}	
+	
+	calculate_value();
+	
+	
+	var serial_number_enable='<?php echo $SerialNumberEnable[0]->serial_number_enable;?>';
+	if(serial_number_enable==1){
+		$('input[name="new_quantity"],input[name="rate"]').die().live("blur",function() { 
+		calculate_value();
+    });
+	}else{
+		$('input[name="quantity"],input[name="rate"]').die().live("blur",function() { 
+		calculate_value();
+    });
+	}
+		
+   
+	
+	$('input[name="value"]').die().live("blur",function() { 
+		var quantity=parseFloat($('input[name="quantity"]').val());
+		var newquantity=parseFloat($('input[name="new_quantity"]').val());
+		var totalquantity = quantity+newquantity;
+		if(isNaN(totalquantity)) { var totalquantity = 0; }
+		var value=parseFloat($('input[name="value"]').val());
+		if(isNaN(value)) { var value = 0; }
+		
+		var total=value/totalquantity;
+	
+		$('input[name="rate"]').val(total.toFixed(6));
+    });
+
+   $('input[name="quantity"]').die().live("keyup",function() {
+	  $('#itm_srl_num').find('input.sr_no').remove();
+		add_sr_textbox();
+	
+    });
+	$('input[name="new_quantity"]').die().live("keyup",function() {
+	  $('#itm_srl_num').find('input.sr_no').remove();
+		add_sr_textbox();
+	
+    });
+	
+	
+	show_table();
+	
+	var serial_numbers='<?php echo $SerialNumberEnable[0]->serial_number_enable; ?>';
+	if(serial_numbers == '1'){
+			$('input[name="quantity"]').attr('readonly','readonly');
+			$('#hide_quantity').show();
+		}else{
+			$('input[name="quantity"]').removeAttr('readonly');
+			$('#hide_quantity').hide();
+			$('input[name="new_quantity"]').val(0);
+			
+		}
+		
+		$('input[name=serial_number_enable]').on("click",function() {
+			var serial_numbers='<?php echo $SerialNumberEnable[0]->serial_number_enable; ?>'; 
+				if(serial_numbers == '1'){
+						$('input[name="quantity"]').attr('readonly','readonly');
+						$('#hide_quantity').show();
+				}else{
+						$('input[name="quantity"]').removeAttr('readonly');
+						$('#hide_quantity').hide();
+						$('input[name="new_quantity"]').val(0);
+				}
+		});
+	
+	function show_table(){
+		var serial_numbers='<?php echo $SerialNumberEnable[0]->serial_number_enable; ?>';
+		if(serial_numbers == '1'){
+			$('#show_data').css("display", "block");
+		}else{
+			$('#show_data').css("display", "none");
+		}
+	}
+	
+	$('select[name="Item_id"]').on("change",function() {
+	
+	$('#itm_srl_num').hide();
+
+		var Item_id=$('select[name="Item_id"] option:selected').val();
+		var url="<?php echo $this->Url->build(['controller'=>'Items','action'=>'check_serial']); ?>";
+		url=url+'/'+Item_id,
+		$.ajax({
+			url: url,
+		}).done(function(response) { 
+			$('#itm_srl_num_enable').html(response);
+			$('input[name="quantity"]').val(0);
+			
+		});
+	});
+	
+	$('input[name="quantity"]').on("keyup",function() {
+		add_sr_textbox(); 
+	});	
+   function add_sr_textbox(){
+	   $('#itm_srl_num').show();
+	  // var serial_number=$('input[name=serial_number_enable]').val();
+	var itemserial_number_status = '<?php echo $SerialNumberEnable[0]->serial_number_enable;?>';	  
+	   //alert(serial_number);
+	   var quantity=$('input[name="quantity"]').val();
+	  
+		if(itemserial_number_status=='1'){ 
+		var tq=parseInt($('input[name="new_quantity"]').val());
+		
+			var p=1;  //alert(quantity);	
+			var r=0;
+			$('#itm_srl_num').find('input.sr_no').remove();
+			$('#itm_srl_num').find('span.help-block-error').remove();
+			for (i = 0; i < tq; i++) {
+			$('#itm_srl_num').append('<input type="text" class="sr_no" name="serial_numbers['+r+'][]" placeholder="'+p+' serial number" id="sr_no'+r+'" />');
+			
+			$('#itm_srl_num').find('input#sr_no'+r).rules('add', {required: true});
+			p++;
+			r++;
+			}
+		}
+		else{ 
+			$('#itm_srl_num').html('');
+			
+		}
+	   
+   }
+	
+	
+	
+   old_quantity();
+   function old_quantity(){
+	   var total_out=$('input[name="new_quantity"]').val();
+			if(total_out < 1){
+				$('#itm_srl_num').find('input.sr_no').remove();
+				}
+			if(total_out > 1){
+				add_sr_textbox();
+			}
+   }
+	
+	
+});
+</script>
